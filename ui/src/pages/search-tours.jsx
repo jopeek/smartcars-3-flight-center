@@ -12,7 +12,8 @@ import Flight from "../components/flight";
 
 const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
 
-const SearchFlightsContent = (props) => {
+
+const SearchToursContent = (props) => {
     const [depApt, setDepApt] = useState("");
     const [arrApt, setArrApt] = useState("");
     const [callsign, setCallsign] = useState("");
@@ -216,7 +217,7 @@ const SearchFlightsContent = (props) => {
                                 <div className="ml-3">
                                     <h3>Flight Center</h3>
                                     <h2 className="color-accent-bkg">
-                                        Search Schedules
+                                        Search Tours
                                     </h2>
                                 </div>
                             </td>
@@ -499,7 +500,7 @@ const SearchFlightsContent = (props) => {
                                 }
                                 simBriefInstalled={simBriefInstalled}
                                 currentFlightData={props.currentFlightData}
-                                source='schedule'
+                                source='tour'
                             />
                         </div>
                     ))
@@ -513,13 +514,29 @@ const SearchFlightsContent = (props) => {
     );
 };
 
-const SearchFlights = ({ identity, currentFlightData }) => {
+const SearchTours = ({ identity, currentFlightData }) => {
     const [airports, setAirports] = useState([]);
+    const [tours, setTours] = useState([]);
     const [aircraft, setAircraft] = useState([]);
 
     const pluginData = identity?.airline?.plugins?.find(
         (p) => p.id === "com.canadaairvirtual.flight-center",
     );
+
+    const getTours = async () => {
+        try {
+            const response = await request({
+                url: `${baseUrl}tours`,
+                method: "GET",
+            });
+            setTours(response);
+        } catch (error) {
+            notify("com.canadaairvirtual.flight-center", null, null, {
+                message: "Failed to fetch tours",
+                type: "danger",
+            });
+        }
+    };
 
     const getAirports = async () => {
         try {
@@ -556,11 +573,12 @@ const SearchFlights = ({ identity, currentFlightData }) => {
 
     useEffect(() => {
         getAirports();
+        getTours();
         getAircraft();
     }, []);
 
     return (
-        <SearchFlightsContent
+        <SearchToursContent
             airports={airports}
             aircraft={aircraft}
             pluginSettings={pluginData?.appliedSettings}
@@ -569,4 +587,4 @@ const SearchFlights = ({ identity, currentFlightData }) => {
     );
 };
 
-export default SearchFlights;
+export default SearchTours;

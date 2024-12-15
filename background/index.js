@@ -39,6 +39,7 @@ const storeCache = (endpoint, key, data) => {
 };
 
 const getAirports = async (req) => {
+    console.log("getAirports");
     const entry = getCache("airports", "data", req);
 
     if (!!entry) {
@@ -56,6 +57,22 @@ const getAirports = async (req) => {
     storeCache("airports", "data", response.data);
     return response.data;
 };
+
+const getTours = async (req) => {
+    const response = await axios({
+        url: `${scIdentity.airline.settings.scriptURL}data/tours`,
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${scIdentity.va_user.session}`,
+        },
+    });
+
+    return response.data;
+};
+
+const getScIdentity = async (req) => {
+    return scIdentity;
+}
 
 const getAircrafts = async (req) => {
     const entry = getCache("aircrafts", "data", req);
@@ -201,6 +218,19 @@ module.exports = {
                         return res.json(airports);
                     } catch (error) {
                         log("Error while getting airport list", "error", error);
+                        return res.status(500).json({});
+                    }
+                },
+            },
+            tours: {
+                description: "Endpoint to list tours",
+                handler: async (req, res) => {
+                    try {
+                        const tours = await getTours(req);
+
+                        return res.json(tours);
+                    } catch (error) {
+                        log("Error while getting tour list", "error", error);
                         return res.status(500).json({});
                     }
                 },
