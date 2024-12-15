@@ -1,9 +1,9 @@
 {
-    "id": "com.tfdidesign.flight-center",
-    "name": "Flight Center",
-    "version": "1.0.5",
+    "id": "com.canadaairvirtual.flight-center",
+    "name": "CAV Flight Center",
+    "version": "1.0.0",
     "type": "airline",
-    "description": "The flight booking system for smartCARS",
+    "description": "A customized flight booking system for Canada Air Virtual",
     "availableSettings": {
         "charter_flights": {
             "name": "Allow Flight Chartering",
@@ -21,7 +21,7 @@
         },
         "enable_booking": {
             "name": "Enable Flight Booking",
-            "description": "Allow pilots to search for and bid on flights",
+            "description": "Allow pilots to search for and dispatch flights",
             "type": "boolean",
             "settingType": "airline",
             "default": true

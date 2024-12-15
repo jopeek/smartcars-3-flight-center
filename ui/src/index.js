@@ -12,7 +12,7 @@ const root = createRoot(container);
 
 root.render(
     <React.StrictMode>
-        <BrowserRouter basename="/plugins/com.tfdidesign.flight-center">
+        <BrowserRouter basename="/plugins/com.canadaairvirtual.flight-center">
             <App />
         </BrowserRouter>
     </React.StrictMode>,

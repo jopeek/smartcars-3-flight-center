@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { GetAircraft } from "../helper.js";
 import Autocomplete from "../components/autocomplete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLeft } from "@fortawesome/pro-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight";
 
 const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
@@ -101,13 +101,13 @@ const SearchFlightsContent = (props) => {
                 setFlights(response);
             } else {
                 setFlights([]);
-                notify("com.tfdidesign.flight-center", null, null, {
+                notify("com.canadaairvirtual.flight-center", null, null, {
                     message: "Error parsing flights",
                     type: "danger",
                 });
             }
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Failed to fetch flights",
                 type: "danger",
             });
@@ -208,7 +208,7 @@ const SearchFlightsContent = (props) => {
                             <td>
                                 <Link className="inline-link" to="/">
                                     <div className="p-3 interactive interactive-shadow">
-                                        <FontAwesomeIcon icon={faLeft} />
+                                        <FontAwesomeIcon icon={faArrowLeft} />
                                     </div>
                                 </Link>
                             </td>
@@ -467,7 +467,7 @@ const SearchFlightsContent = (props) => {
                     Duration {getSortingSymbol("duration")}
                 </div>
                 <div
-                    className="text-left interactive col-span-2"
+                    className="text-left interactive"
                     onClick={() => {
                         sortBy("aircraft");
                     }}
@@ -480,7 +480,7 @@ const SearchFlightsContent = (props) => {
             <div id="tblBody" className="overflow-y-auto pl-8">
                 {props.aircraft.length > 0 && sortedFlights.length > 0 ? (
                     sortedFlights.map((flight) => (
-                        <div style={{ width: `${width}px` }}>
+                        <div style={{ width: `${width}px` }} key={flight.id}>
                             <Flight
                                 key={flight.id}
                                 airports={props.airports}
@@ -517,7 +517,7 @@ const SearchFlights = ({ identity, currentFlightData }) => {
     const [aircraft, setAircraft] = useState([]);
 
     const pluginData = identity?.airline?.plugins?.find(
-        (p) => p.id === "com.tfdidesign.flight-center",
+        (p) => p.id === "com.canadaairvirtual.flight-center",
     );
 
     const getAirports = async () => {
@@ -528,7 +528,7 @@ const SearchFlights = ({ identity, currentFlightData }) => {
             });
             setAirports(response);
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Failed to fetch airports",
                 type: "danger",
             });
@@ -546,7 +546,7 @@ const SearchFlights = ({ identity, currentFlightData }) => {
 
             setAircraft(response);
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Failed to fetch aircraft",
                 type: "danger",
             });

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import Loading from "../components/loading";
 import Autocomplete from "../components/autocomplete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLeft } from "@fortawesome/pro-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
 
@@ -79,14 +79,14 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                 },
             });
 
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Flight created",
                 type: "success",
             });
 
             navigate("/");
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Failed to create flight",
                 type: "danger",
             });
@@ -114,7 +114,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
             !settings["com.tfdidesign.simbrief"] ||
             !settings["com.tfdidesign.simbrief"].simbriefUsername
         ) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "SimBrief username not set",
                 type: "danger",
             });
@@ -183,7 +183,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                             <td>
                                 <Link className="inline-link" to="/">
                                     <div className="p-3 interactive interactive-shadow">
-                                        <FontAwesomeIcon icon={faLeft} />
+                                        <FontAwesomeIcon icon={faArrowLeft} />
                                     </div>
                                 </Link>
                             </td>
@@ -409,7 +409,7 @@ const CreateFlight = ({ identity }) => {
             });
             setAirports(response);
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Failed to fetch airports",
                 type: "danger",
             });
@@ -427,7 +427,7 @@ const CreateFlight = ({ identity }) => {
 
             setAircraft(response);
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Failed to fetch aircraft",
                 type: "danger",
             });

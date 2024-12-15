@@ -73,7 +73,7 @@ function MainApp() {
 
             setIdentity(response);
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Failed to fetch identity.",
                 type: "warning",
             });
@@ -84,7 +84,7 @@ function MainApp() {
     if (isLoading) return <Loading />;
 
     const pluginData = identity?.airline?.plugins?.find(
-        (p) => p.id === "com.tfdidesign.flight-center",
+        (p) => p.id === "com.canadaairvirtual.flight-center",
     );
     const charterFlights =
         pluginData?.appliedSettings?.charter_flights === true;

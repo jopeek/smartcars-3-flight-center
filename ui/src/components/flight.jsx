@@ -13,7 +13,7 @@ import {
     faPlaneDeparture,
     faPlus,
     faCompass,
-} from "@fortawesome/pro-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
 
 const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
@@ -60,7 +60,7 @@ const Flight = (props) => {
             });
 
             if (response && response.bidID) {
-                notify("com.tfdidesign.flight-center", null, null, {
+                notify("com.canadaairvirtual.flight-center", null, null, {
                     message: "Flight booked successfully",
                     type: "success",
                 });
@@ -69,7 +69,7 @@ const Flight = (props) => {
                 throw new Error("Failed to book flight");
             }
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
+            notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "Failed to book flight",
                 type: "danger",
             });
@@ -94,7 +94,7 @@ const Flight = (props) => {
             : await _bidFlight();
 
         if (!aircraft) {
-            return notify("com.tfdidesign.flight-center", null, null, {
+            return notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "No suitable aircraft for this flight",
                 type: "danger",
             });
@@ -130,8 +130,8 @@ const Flight = (props) => {
 
             foundBid = !!bids.find((bid) => bid.bidID === bidID);
         } catch (error) {
-            notify("com.tfdidesign.flight-center", null, null, {
-                message: "Failed to get bid flights",
+            notify("com.canadaairvirtual.flight-center", null, null, {
+                message: "Failed to get dispatched flights",
                 type: "danger",
             });
 
@@ -149,8 +149,8 @@ const Flight = (props) => {
                     pluginID: "com.tfdidesign.flight-tracking",
                 });
             } else {
-                notify("com.tfdidesign.flight-center", null, null, {
-                    message: "Failed to start flight - bid not found",
+                notify("com.canadaairvirtual.flight-center", null, null, {
+                    message: "Failed to start flight - dispatched flight not found",
                     type: "danger",
                 });
 
@@ -166,7 +166,7 @@ const Flight = (props) => {
         e.stopPropagation();
 
         if (!aircraft) {
-            return notify("com.tfdidesign.flight-center", null, null, {
+            return notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "No suitable aircraft for this flight",
                 type: "danger",
             });
@@ -226,8 +226,8 @@ const Flight = (props) => {
                     (bid) => bid.bidID === props.flight.bidID,
                 );
             } catch (error) {
-                notify("com.tfdidesign.flight-center", null, null, {
-                    message: "Failed to get bid flights",
+                notify("com.canadaairvirtual.flight-center", null, null, {
+                    message: "Failed to get dispatched flights",
                     type: "danger",
                 });
 
@@ -244,15 +244,15 @@ const Flight = (props) => {
                     pluginID: "com.tfdidesign.flight-tracking",
                 });
             } else {
-                notify("com.tfdidesign.flight-center", null, null, {
-                    message: "Failed to start flight - bid not found",
+                notify("com.canadaairvirtual.flight-center", null, null, {
+                    message: "Failed to start flight - dispatched flight not found",
                     type: "danger",
                 });
 
                 props.getBidFlights();
             }
         } catch (error) {
-            return notify("com.tfdidesign.flight-center", null, null, {
+            return notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "No suitable flight found",
                 type: "danger",
             });
@@ -261,7 +261,7 @@ const Flight = (props) => {
 
     const planWithSimBrief = async () => {
         if (!aircraft) {
-            return notify("com.tfdidesign.flight-center", null, null, {
+            return notify("com.canadaairvirtual.flight-center", null, null, {
                 message: "No suitable aircraft for this flight",
                 type: "danger",
             });
@@ -316,7 +316,7 @@ const Flight = (props) => {
         return (
             <div className="grid grid-cols-10 data-table-row p-3 mt-3 box-shadow select items-center">
                 <div
-                    className="interactive col-span-2"
+                    className="interactive"
                     onClick={() => props.setExpandedFlight(null)}
                 >
                     <h2 className="hidden md:block">
@@ -334,6 +334,7 @@ const Flight = (props) => {
                 <div className="text-left">
                     {DecDurToStr(props.flight.flightTime)}
                 </div>
+                <div className="text-left">{props.flight.notes}</div>
                 <div className="text-left col-span-2">
                     {aircraft && !Array.isArray(props.flight.aircraft) ? (
                         `${aircraft.name}${
@@ -546,7 +547,7 @@ const Flight = (props) => {
                                         ? props.flight.bidID
                                         : props.flight.id
                                 }`}
-                                data-tooltip-content="Bid on this flight"
+                                data-tooltip-content="Dispatch this flight"
                             >
                                 <FontAwesomeIcon icon={faPlus} />
                             </button>
@@ -554,13 +555,11 @@ const Flight = (props) => {
                 </div>
 
                 <div className="col-span-3">
-                    {props.flight.type === "P" ? (
-                        <h3>Passenger Flight</h3>
-                    ) : props.flight.type === "C" ? (
-                        <h3>Cargo Flight</h3>
-                    ) : (
-                        <h3>Charter Flight</h3>
-                    )}
+                    {props.flight.notes ? (
+                        <h3>
+                            <i>{props.flight.notes}</i>
+                        </h3>
+                    ) : null}
                 </div>
                 <div className="col-span-5"></div>
                 <div className="text-right col-span-2">
@@ -572,11 +571,13 @@ const Flight = (props) => {
                 </div>
 
                 <div className="col-span-10">
-                    {props.flight.notes ? (
-                        <p className="mt-3">
-                            <i>{props.flight.notes}</i>
-                        </p>
-                    ) : null}
+                    {props.flight.type === "P" ? (
+                        <p className="mt-3">Passenger Flight</p>
+                    ) : props.flight.type === "C" ? (
+                        <p className="mt-3">Cargo Flight</p>
+                    ) : (
+                        <p className="mt-3">Charter Flight</p>
+                    )}
                     <hr className="mt-3 mb-3" />
                 </div>
 
@@ -653,7 +654,7 @@ const Flight = (props) => {
                     )
                 }
             >
-                <div className="text-left col-span-2">
+                <div className="text-left">
                     {props.flight.code + props.flight.number}
                 </div>
                 <div className="text-left">{props.flight.departureAirport}</div>
@@ -664,6 +665,7 @@ const Flight = (props) => {
                 <div className="text-left">
                     {DecDurToStr(props.flight.flightTime)}
                 </div>
+                <div className="text-left">{props.flight.notes}</div>
                 <div
                     className="text-left col-span-2"
                     onClick={(e) => {
@@ -882,9 +884,9 @@ const Flight = (props) => {
                                         ? props.flight.bidID
                                         : props.flight.id
                                 }`}
-                                data-tooltip-content="Bid on this flight"
+                                data-tooltip-content="Dispatch this flight"
                             >
-                                <FontAwesomeIcon icon={faPlus} />
+                                <span className="iconify" style={{ marginTop: "0", fontSize: "1.5rem", marginRight: "0" }} data-icon="mdi:luggage"></span>
                             </button>
                         )}
                 </div>
