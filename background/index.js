@@ -59,7 +59,7 @@ const getAirports = async (req) => {
 
 const getAircrafts = async (req) => {
     const entry = getCache("aircrafts", "data", req);
-console.log('here');
+
     if (!!entry) {
         return entry;
     }

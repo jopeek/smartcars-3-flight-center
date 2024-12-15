@@ -499,6 +499,7 @@ const SearchFlightsContent = (props) => {
                                 }
                                 simBriefInstalled={simBriefInstalled}
                                 currentFlightData={props.currentFlightData}
+                                source='schedule'
                             />
                         </div>
                     ))
