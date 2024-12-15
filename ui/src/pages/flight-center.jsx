@@ -57,7 +57,7 @@ const Bids = (props) => {
       getBidFlights();
     } catch (error) {
       notify("flight-center", null, null, {
-        message: "Failed to unbook flight",
+        message: "Failed to delete dispatch",
         type: "danger",
       });
     }

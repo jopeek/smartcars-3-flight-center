@@ -30,6 +30,7 @@ const Flight = (props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(props.flight.aircraft);
         if (!Array.isArray(props.flight.aircraft)) {
             const res = GetAircraft(props.flight.aircraft, props.aircraft);
 
@@ -55,22 +56,22 @@ const Flight = (props) => {
                 url: `${baseUrl}book-flight`,
                 method: "POST",
                 data: {
-                    flightID: `${props.flight.id}`,
+                    flightID: `schedule-${props.flight.id}`
                 },
             });
 
             if (response && response.bidID) {
                 notify("com.canadaairvirtual.flight-center", null, null, {
-                    message: "Flight booked successfully",
+                    message: "Flight dispatched successfully",
                     type: "success",
                 });
                 return response.bidID;
             } else {
-                throw new Error("Failed to book flight");
+                throw new Error("Failed to dispatch flight");
             }
         } catch (error) {
             notify("com.canadaairvirtual.flight-center", null, null, {
-                message: "Failed to book flight",
+                message: "Failed to dispatch flight",
                 type: "danger",
             });
         }
