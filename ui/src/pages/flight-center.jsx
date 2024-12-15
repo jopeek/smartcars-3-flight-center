@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight.jsx";
 
-const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
 
 const Bids = (props) => {
   const [logBookInstalled, setLogBookInstalled] = useState(false);
@@ -106,7 +106,7 @@ const Bids = (props) => {
     try {
       // Using request and not localApi because we want to ignore errors
       const recoverableFlight = await request(
-        "http://localhost:7172/api/com.tfdidesign.flight-center/recoverable",
+        "http://localhost:7172/api/com.canadaairvirtual.flight-center/recoverable",
         "GET"
       );
 

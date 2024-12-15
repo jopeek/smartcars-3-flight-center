@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight";
 
-const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
 
 
 const SearchToursContent = (props) => {

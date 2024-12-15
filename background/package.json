@@ -1,11 +1,11 @@
 {
-    "name": "flight-center-background",
+    "name": "cav-flight-center-background",
     "scripts": {
         "build": "npx webpack --config webpack.config.js"
     },
     "devDependencies": {
         "webpack": "^5.76.1",
-        "webpack-cli": "^5.0.1",
+        "webpack-cli": "^5.1.4",
         "webpack-node-externals": "^3.0.0"
     },
     "dependencies": {

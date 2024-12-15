@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
 
-const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
 
 const Flight = (props) => {
   const [aircraft, setAircraft] = useState(null);
@@ -170,7 +170,7 @@ const Flight = (props) => {
 
     try {
       const recoverableFlightData = await localApi(
-        "api/com.tfdidesign.flight-center/recover"
+        "api/com.canadaairvirtual.flight-center/recover"
       );
 
       if (

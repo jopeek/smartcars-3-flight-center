@@ -8,7 +8,7 @@ import Autocomplete from "../components/autocomplete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
 
 const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
     const [isLoading, setIsLoading] = useState(false);
