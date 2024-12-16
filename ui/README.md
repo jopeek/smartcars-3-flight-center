@@ -1,3 +1,13 @@
+# To Run
+
+Go into the ui directory and run `npm start`
+
+# To Build for Deployment
+
+Go into both the ui and background directories and run `npm run build`
+For ui, take the output of the build directory
+For background, take the output of the build directory plus the node_modules folder
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

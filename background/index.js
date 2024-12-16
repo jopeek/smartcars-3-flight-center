@@ -39,7 +39,6 @@ const storeCache = (endpoint, key, data) => {
 };
 
 const getAirports = async (req) => {
-    console.log("getAirports");
     const entry = getCache("airports", "data", req);
 
     if (!!entry) {
@@ -69,10 +68,6 @@ const getTours = async (req) => {
 
     return response.data;
 };
-
-const getScIdentity = async (req) => {
-    return scIdentity;
-}
 
 const getAircrafts = async (req) => {
     const entry = getCache("aircrafts", "data", req);

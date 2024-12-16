@@ -23,7 +23,7 @@ const Flight = (props) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [route, setRoute] = useState(props?.flight?.route?.join(" ") ?? "");
   const [network, setNetwork] = useState("offline"); //set as default
-
+//console.log(props);
   const depApt = GetAirport(props.flight.departureAirport, props.airports);
   const arrApt = GetAirport(props.flight.arrivalAirport, props.airports);
 
