@@ -40,6 +40,8 @@ const SearchToursContent = (props) => {
       let params = {};
       if (tour.length >= 3)
         params.tour = tour;
+      if (tourCategory.length >= 3)
+        params.tourCategory = tourCategory;
 
       const response = await request({
         url: `${baseUrl}searchTours`,
