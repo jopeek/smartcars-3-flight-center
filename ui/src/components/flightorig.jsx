@@ -13,18 +13,17 @@ import {
   faPlaneDeparture,
   faPlus,
   faCompass,
-  faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
 
-const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.tfdidesign.flight-center/";
 
 const Flight = (props) => {
   const [aircraft, setAircraft] = useState(null);
   const [shouldRender, setShouldRender] = useState(false);
   const [route, setRoute] = useState(props?.flight?.route?.join(" ") ?? "");
   const [network, setNetwork] = useState("offline"); //set as default
-  //console.log(props);
+
   const depApt = GetAirport(props.flight.departureAirport, props.airports);
   const arrApt = GetAirport(props.flight.arrivalAirport, props.airports);
 
@@ -54,22 +53,22 @@ const Flight = (props) => {
         url: `${baseUrl}book-flight`,
         method: "POST",
         data: {
-          flightID: `${props.source}-${props.flight.id}-${aircraft?.id}`,
+          flightID: `${props.flight.id}`,
         },
       });
 
       if (response && response.bidID) {
-        notify("com.canadaairvirtual.flight-center", null, null, {
-          message: "Flight dispatched successfully",
+        notify("com.tfdidesign.flight-center", null, null, {
+          message: "Flight booked successfully",
           type: "success",
         });
         return response.bidID;
       } else {
-        throw new Error("Failed to dispatch flight");
+        throw new Error("Failed to book flight");
       }
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
-        message: "Failed to dispatch flight",
+      notify("com.tfdidesign.flight-center", null, null, {
+        message: "Failed to book flight",
         type: "danger",
       });
     }
@@ -91,7 +90,7 @@ const Flight = (props) => {
     const bidID = props.flight.bidID ? props.flight.bidID : await _bidFlight();
 
     if (!aircraft) {
-      return notify("com.canadaairvirtual.flight-center", null, null, {
+      return notify("com.tfdidesign.flight-center", null, null, {
         message: "No suitable aircraft for this flight",
         type: "danger",
       });
@@ -127,8 +126,8 @@ const Flight = (props) => {
 
       foundBid = !!bids.find((bid) => bid.bidID === bidID);
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
-        message: "Failed to get dispatched flights",
+      notify("com.tfdidesign.flight-center", null, null, {
+        message: "Failed to get bid flights",
         type: "danger",
       });
 
@@ -146,8 +145,8 @@ const Flight = (props) => {
           pluginID: "com.tfdidesign.flight-tracking",
         });
       } else {
-        notify("com.canadaairvirtual.flight-center", null, null, {
-          message: "Failed to start flight - dispatched flight not found",
+        notify("com.tfdidesign.flight-center", null, null, {
+          message: "Failed to start flight - bid not found",
           type: "danger",
         });
 
@@ -163,7 +162,7 @@ const Flight = (props) => {
     e.stopPropagation();
 
     if (!aircraft) {
-      return notify("com.canadaairvirtual.flight-center", null, null, {
+      return notify("com.tfdidesign.flight-center", null, null, {
         message: "No suitable aircraft for this flight",
         type: "danger",
       });
@@ -171,7 +170,7 @@ const Flight = (props) => {
 
     try {
       const recoverableFlightData = await localApi(
-        "api/com.canadaairvirtual.flight-center/recover"
+        "api/com.tfdidesign.flight-center/recover"
       );
 
       if (
@@ -221,8 +220,8 @@ const Flight = (props) => {
 
         foundBid = !!bids.find((bid) => bid.bidID === props.flight.bidID);
       } catch (error) {
-        notify("com.canadaairvirtual.flight-center", null, null, {
-          message: "Failed to get dispatched flights",
+        notify("com.tfdidesign.flight-center", null, null, {
+          message: "Failed to get bid flights",
           type: "danger",
         });
 
@@ -239,15 +238,15 @@ const Flight = (props) => {
           pluginID: "com.tfdidesign.flight-tracking",
         });
       } else {
-        notify("com.canadaairvirtual.flight-center", null, null, {
-          message: "Failed to start flight - dispatched flight not found",
+        notify("com.tfdidesign.flight-center", null, null, {
+          message: "Failed to start flight - bid not found",
           type: "danger",
         });
 
         props.getBidFlights();
       }
     } catch (error) {
-      return notify("com.canadaairvirtual.flight-center", null, null, {
+      return notify("com.tfdidesign.flight-center", null, null, {
         message: "No suitable flight found",
         type: "danger",
       });
@@ -256,7 +255,7 @@ const Flight = (props) => {
 
   const planWithSimBrief = async () => {
     if (!aircraft) {
-      return notify("com.canadaairvirtual.flight-center", null, null, {
+      return notify("com.tfdidesign.flight-center", null, null, {
         message: "No suitable aircraft for this flight",
         type: "danger",
       });
@@ -302,38 +301,78 @@ const Flight = (props) => {
   }
 
   if (props.expanded) {
-    console.log("props.expanded", props.expanded);
     return (
       <div className="grid grid-cols-10 data-table-row p-3 mt-3 box-shadow select items-center">
         <div
-          className="interactive"
+          className="interactive col-span-2"
           onClick={() => props.setExpandedFlight(null)}
         >
           <h2 className="hidden md:block">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            {props.flight.code + props.flight.number}
           </h2>
           <h3 className="block md:hidden">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            {props.flight.code + props.flight.number}
           </h3>
         </div>
         <div className="text-left">{props.flight.departureAirport}</div>
         <div className="text-left">{props.flight.arrivalAirport}</div>
+        <div className="text-left">
+          {props.flight.departureTime} - {props.flight.arrivalTime}
+        </div>
         <div className="text-left">{DecDurToStr(props.flight.flightTime)}</div>
-        <div className="text-left col-span-2">{props.flight.notes}</div>
         <div className="text-left col-span-2">
-          <select
-            onChange={(e) => {
-              setAircraft(GetAircraft(e.target.value, props.aircraft));
-            }}
-            value={aircraft?.id ?? ""}
-            className=""
-          >
-            {props.aircraft.map((a) => (
-              <option key={a.id} value={a.id}>
-                {a.name} {a.registration ? ` (${a.registration})` : ""}
-              </option>
-            ))}
-          </select>
+          {aircraft && !Array.isArray(props.flight.aircraft) ? (
+            `${aircraft.name}${
+              aircraft.registration ? ` (${aircraft.registration})` : ""
+            }`
+          ) : (
+            <div className="w-full">
+              {Array.isArray(props.flight.aircraft) &&
+              props.flight.aircraft.length > 0 ? (
+                <select
+                  onChange={(e) => {
+                    setAircraft(GetAircraft(e.target.value, props.aircraft));
+                  }}
+                  value={aircraft?.id ?? ""}
+                  className="border text-sm rounded-lg block w-full"
+                >
+                  {props.flight.aircraft
+                    .map((a) => GetAircraft(a, props.aircraft))
+                    .map((a) => (
+                      <option key={a.id} value={a.id}>
+                        {a.name} {a.registration ? ` (${a.registration})` : ""}
+                      </option>
+                    ))}
+                </select>
+              ) : (
+                <div>
+                  {props.pluginSettings?.allow_fleet_substitution !== false ||
+                  props.pluginSettings.allow_any_aircraft_in_fleet !== false ? (
+                    <select
+                      onChange={(e) => {
+                        setAircraft(
+                          GetAircraft(e.target.value, props.aircraft)
+                        );
+                      }}
+                      value={aircraft?.id ?? ""}
+                      className="border text-sm rounded-lg block w-full"
+                    >
+                      {props.aircraft.map((a) => (
+                        <option key={a.id} value={a.id}>
+                          {a.name}{" "}
+                          {a.registration ? ` (${a.registration})` : ""}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span>
+                      <i>No Aircraft available</i>
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <div className="flex items-center justify-end px-3 col-span-2">
           {props.flight.bidID &&
@@ -450,7 +489,7 @@ const Flight = (props) => {
                 data-tooltip-id={`bid-${
                   props.flight.bidID ? props.flight.bidID : props.flight.id
                 }`}
-                data-tooltip-content="Dispatch this flight"
+                data-tooltip-content="Bid on this flight"
               >
                 <FontAwesomeIcon icon={faPlus} />
               </button>
@@ -458,11 +497,13 @@ const Flight = (props) => {
         </div>
 
         <div className="col-span-3">
-          {props.flight.notes ? (
-            <h3>
-              <i>{props.flight.notes}</i>
-            </h3>
-          ) : null}
+          {props.flight.type === "P" ? (
+            <h3>Passenger Flight</h3>
+          ) : props.flight.type === "C" ? (
+            <h3>Cargo Flight</h3>
+          ) : (
+            <h3>Charter Flight</h3>
+          )}
         </div>
         <div className="col-span-5"></div>
         <div className="text-right col-span-2">
@@ -474,13 +515,11 @@ const Flight = (props) => {
         </div>
 
         <div className="col-span-10">
-          {props.flight.type === "P" ? (
-            <p className="mt-3">Passenger Flight</p>
-          ) : props.flight.type === "C" ? (
-            <p className="mt-3">Cargo Flight</p>
-          ) : (
-            <p className="mt-3">Charter Flight</p>
-          )}
+          {props.flight.notes ? (
+            <p className="mt-3">
+              <i>{props.flight.notes}</i>
+            </p>
+          ) : null}
           <hr className="mt-3 mb-3" />
         </div>
 
@@ -545,87 +584,81 @@ const Flight = (props) => {
     return (
       <div
         className="grid grid-cols-10 items-center data-table-row p-3 mt-3 select interactive-shadow"
-        onClick={() => {
+        onClick={() =>
           props.setExpandedFlight(
             props.flight.bidID ? props.flight.bidID : props.flight.id
-          );
-        }}
+          )
+        }
       >
-        {props.source === "tour" ? (
-          <div className="text-left col-span-2">
-            {props.flight.name + " - Leg " + props.flight.legNumber}
-            {props.flight.completed && (
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                className="text-green-500 ml-1"
-              />
-            )}
-          </div>
-        ) : props.source === "schedule" ? (
-          <div className="text-left col-span-2">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
-          </div>
-        ) : (
-          <div className="text-left">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
-          </div>
-        )}
-
-        {props.source === "tour" ? (
-          <div className="text-left">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
-          </div>
-        ) : (
-          <div className="text-left">{props.flight.departureAirport}</div>
-        )}
-
-        {props.source === "tour" ? (
-          <div className="text-left">{props.flight.departureAirport}</div>
-        ) : (
-          <div className="text-left">{props.flight.arrivalAirport}</div>
-        )}
-
-        {props.source === "tour" ? (
-          <div className="text-left">{props.flight.arrivalAirport}</div>
-        ) : props.source === "schedule" ? (
-          <div className="text-left">{props.flight.distance}nm</div>
-        ) : (
-          <div className="text-left">
-            {DecDurToStr(props.flight.flightTime)}
-          </div>
-        )}
-
-        {props.source === "tour" ? (
-          <div className="text-left">{props.flight.distance}nm</div>
-        ) : props.source === "schedule" ? (
-          <div className="text-left">
-            {DecDurToStr(props.flight.flightTime)}
-          </div>
-        ) : (
-          <div className="text-left col-span-2">{props.flight.notes}</div>
-        )}
-
+        <div className="text-left col-span-2">
+          {props.flight.code + props.flight.number}
+        </div>
+        <div className="text-left">{props.flight.departureAirport}</div>
+        <div className="text-left">{props.flight.arrivalAirport}</div>
+        <div className="text-left">
+          {props.flight.departureTime} - {props.flight.arrivalTime}
+        </div>
+        <div className="text-left">{DecDurToStr(props.flight.flightTime)}</div>
         <div
           className="text-left col-span-2"
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
-          <select
-            onChange={(e) => {
-              setAircraft(GetAircraft(e.target.value, props.aircraft));
-            }}
-            value={aircraft?.id ?? ""}
-            className=""
-          >
-            {props.aircraft.map((a) => (
-              <option key={a.id} value={a.id}>
-                {a.name} {a.registration ? ` (${a.registration})` : ""}
-              </option>
-            ))}
-          </select>
+          {aircraft && !Array.isArray(props.flight.aircraft) ? (
+            `${aircraft.name}${
+              aircraft.registration ? ` (${aircraft.registration})` : ""
+            }`
+          ) : (
+            <div className="w-full">
+              {Array.isArray(props.flight.aircraft) &&
+              props.flight.aircraft.length > 0 ? (
+                <select
+                  onChange={(e) => {
+                    setAircraft(GetAircraft(e.target.value, props.aircraft));
+                  }}
+                  value={aircraft?.id ?? ""}
+                  className="border text-sm rounded-lg block w-full"
+                >
+                  {props.flight.aircraft
+                    .map((a) => GetAircraft(a, props.aircraft))
+                    .filter((a) => !!a)
+                    .map((a) => (
+                      <option key={a.id} value={a.id}>
+                        {a.name} {a.registration ? ` (${a.registration})` : ""}
+                      </option>
+                    ))}
+                </select>
+              ) : (
+                <div>
+                  {props.pluginSettings?.allow_fleet_substitution !== false ||
+                  props.pluginSettings.allow_any_aircraft_in_fleet !== false ? (
+                    <select
+                      onChange={(e) => {
+                        setAircraft(
+                          GetAircraft(e.target.value, props.aircraft)
+                        );
+                      }}
+                      value={aircraft?.id ?? ""}
+                      className="border text-sm rounded-lg block w-full"
+                    >
+                      {props.aircraft.map((a) => (
+                        <option key={a.id} value={a.id}>
+                          {a.name}{" "}
+                          {a.registration ? ` (${a.registration})` : ""}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span>
+                      <i>No Aircraft available</i>
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
-
         <div className="flex items-center justify-end px-3 col-span-2">
           {props.flight.bidID &&
             props.currentFlightData?.bidID !== props.flight.bidID && (
@@ -741,17 +774,9 @@ const Flight = (props) => {
                 data-tooltip-id={`bid-${
                   props.flight.bidID ? props.flight.bidID : props.flight.id
                 }`}
-                data-tooltip-content="Dispatch this flight"
+                data-tooltip-content="Bid on this flight"
               >
-                <span
-                  className="iconify"
-                  style={{
-                    marginTop: "0",
-                    fontSize: "1.5rem",
-                    marginRight: "0",
-                  }}
-                  data-icon="mdi:luggage"
-                ></span>
+                <FontAwesomeIcon icon={faPlus} />
               </button>
             )}
         </div>

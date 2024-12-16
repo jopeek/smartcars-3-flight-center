@@ -3,6 +3,7 @@
     "name": "CAV Flight Center",
     "version": "1.0.0",
     "type": "airline",
+    "allowedCommunities": [402],
     "description": "A customized flight booking system for Canada Air Virtual",
     "availableSettings": {
         "charter_flights": {

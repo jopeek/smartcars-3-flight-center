@@ -20,7 +20,7 @@ const SearchFlightsContent = (props) => {
     const [durations, setDurations] = useState([0, 11]);
     const [distances, setDistances] = useState([0, 11]);
     const [simBriefInstalled, setSimBriefInstalled] = useState(false);
-    const [expandedFlight, setExpandedFlight] = useState(-1);
+    const [expandedFlight, setExpandedFlight] = useState(null);
     const [flights, setFlights] = useState([]);
     const [sortParams, setSortParams] = useState(null);
     const [width, setWidth] = useState(0);
@@ -482,7 +482,6 @@ const SearchFlightsContent = (props) => {
                     sortedFlights.map((flight) => (
                         <div style={{ width: `${width}px` }} key={flight.id}>
                             <Flight
-                                key={flight.id}
                                 airports={props.airports}
                                 aircraft={props.aircraft}
                                 setExpandedFlight={setExpandedFlight}
