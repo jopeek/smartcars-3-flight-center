@@ -278,7 +278,7 @@ const SearchFlightsContent = (props) => {
                     <div className="col-span-1 pl-1">
                         <input
                             type="text"
-                            placeholder="CALLSIGN"
+                            placeholder="Flight Number"
                             value={callsign}
                             onChange={(e) => {
                                 setCallsign(e.target.value);
@@ -432,7 +432,7 @@ const SearchFlightsContent = (props) => {
                         sortBy("callsign");
                     }}
                 >
-                    Callsign {getSortingSymbol("callsign")}
+                    Flight Number {getSortingSymbol("callsign")}
                 </div>
                 <div
                     className="text-left interactive"
@@ -456,7 +456,7 @@ const SearchFlightsContent = (props) => {
                         sortBy("departureTime");
                     }}
                 >
-                    Schedule {getSortingSymbol("departureTime")}
+                    Distance {getSortingSymbol("departureTime")}
                 </div>
                 <div
                     className="text-left interactive"

@@ -223,12 +223,12 @@ const Bids = (props) => {
         ref={widthRef}
         className="grid grid-cols-10 data-table-header p-3 mt-3 mx-8"
       >
-        <div className="text-left">Callsign</div>
+        <div className="text-left">Flight Number</div>
         <div className="text-left">Departure</div>
         <div className="text-left">Arrival</div>
-        <div className="text-left">Schedule</div>
+        {/* <div className="text-left">Schedule</div> */}
         <div className="text-left">Duration</div>
-        <div className="text-left">Type</div>
+        <div className="text-left col-span-2">Type</div>
         <div className="col-span-3 text-left">Aircraft</div>
       </div>
 

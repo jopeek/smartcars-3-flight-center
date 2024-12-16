@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useLayoutEffect } from "react";
-import { Range, getTrackBackground } from "react-range";
 import { Link } from "react-router-dom";
 import { request, notify, localApi } from "@tfdidesign/smartcars3-ui-sdk";
 import { useEffect, useRef } from "react";
-import { GetAircraft } from "../helper.js";
 import Autocomplete from "../components/autocomplete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +12,7 @@ const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
 
 const SearchToursContent = (props) => {
   const [tour, setTour] = useState("");
+  const [tourCategory, setTourCategory] = useState("");
   const [simBriefInstalled, setSimBriefInstalled] = useState(false);
   const [expandedFlight, setExpandedFlight] = useState(-1);
   const [flights, setFlights] = useState([]);
@@ -40,14 +39,13 @@ const SearchToursContent = (props) => {
     try {
       let params = {};
       if (tour.length >= 3)
-        params.departure = tour.substring(0, Math.min(4, tour.length));
+        params.tour = tour;
 
       const response = await request({
-        url: `${baseUrl}tours`,
+        url: `${baseUrl}searchTours`,
         params: params,
         method: "GET",
       });
-      console.log(response);
 
       if (Array.isArray(response)) {
         setFlights(response);
@@ -78,7 +76,7 @@ const SearchToursContent = (props) => {
 
   useEffect(() => {
     getFlights();
-  }, []);
+  }, [tour, tourCategory]);
 
   useLayoutEffect(() => {
     setHeight("tblBody");
@@ -106,9 +104,13 @@ const SearchToursContent = (props) => {
 
   const sortedFlights = flights !== null ? [...flights] : [];
 
-  const toursStrings = Array.from(
-    new Set(props.tours.map((tour) => tour.category + " - " + tour.name))
-  );
+  const toursStrings = props.tours.map((tour) => {
+    return tour.name + " [" + tour.category + "]";
+  });
+
+  const tourCategoriesStrings = props.tourCategories.map((category) => {
+    return category.name;
+  });
 
   return (
     <div className="root-container">
@@ -136,6 +138,17 @@ const SearchToursContent = (props) => {
 
       <div className="groupbox mb-3 p-3 mx-8">
         <div className="grid grid-cols-4">
+            <div className="col-span-1 pr-1">
+            <Autocomplete
+              placeholder="Categories"
+              options={tourCategoriesStrings}
+              value={tourCategory}
+              onChange={(e) => {
+                setTourCategory(e);
+              }}
+              required={true}
+            />
+          </div>
           <div className="col-span-1 pr-1">
             <Autocomplete
               placeholder="Tours"
@@ -147,6 +160,12 @@ const SearchToursContent = (props) => {
               required={true}
             />
           </div>
+          <div className="col-span-2">
+            <h3 className="mt-1">
+              Note: Only tour legs that you are eligible to fly will be shown
+              here.
+            </h3>
+          </div>
         </div>
       </div>
 
@@ -154,11 +173,11 @@ const SearchToursContent = (props) => {
         <h4>
           {sortedFlights.length > 0
             ? sortedFlights.length >= 100
-              ? "100+ Flights Found"
+              ? "100+ Tour Legs Found"
               : sortedFlights.length > 1
-              ? sortedFlights.length + " Flights Found"
-              : "1 Flight Found"
-            : "No Flights Found"}
+              ? sortedFlights.length + " Tour Legs Found"
+              : "1 Tour Leg Found"
+            : "No Tour Legs Found"}
         </h4>
       </div>
 
@@ -166,11 +185,11 @@ const SearchToursContent = (props) => {
         ref={widthRef}
         className="grid grid-cols-10 data-table-header p-3 mt-3 mx-8"
       >
-        <div className="col-span-2 interactive">Callsign</div>
+        <div className="col-span-2 interactive">Tour Leg</div>
+        <div className="text-left interactive">Flight Number</div>
         <div className="text-left interactive">Departure</div>
         <div className="text-left interactive">Arrival</div>
-        <div className="text-left interactive">Schedule</div>
-        <div className="text-left interactive">Duration</div>
+        <div className="text-left interactive">Distance</div>
         <div className="text-left interactive">Aircraft</div>
         <div className="text-right col-span-2"></div>
       </div>
@@ -213,6 +232,7 @@ const SearchToursContent = (props) => {
 const SearchTours = ({ identity, currentFlightData }) => {
   const [airports, setAirports] = useState([]);
   const [tours, setTours] = useState([]);
+  const [tourCategories, setTourCategories] = useState([]);
   const [aircraft, setAircraft] = useState([]);
 
   const pluginData = identity?.airline?.plugins?.find(
@@ -229,6 +249,21 @@ const SearchTours = ({ identity, currentFlightData }) => {
     } catch (error) {
       notify("com.canadaairvirtual.flight-center", null, null, {
         message: "Failed to fetch tours",
+        type: "danger",
+      });
+    }
+  };
+
+  const getTourCategories = async () => {
+    try {
+      const response = await request({
+        url: `${baseUrl}tourCategories`,
+        method: "GET",
+      });
+      setTourCategories(response);
+    } catch (error) {
+      notify("com.canadaairvirtual.flight-center", null, null, {
+        message: "Failed to fetch tour categories",
         type: "danger",
       });
     }
@@ -269,6 +304,7 @@ const SearchTours = ({ identity, currentFlightData }) => {
 
   useEffect(() => {
     getTours();
+    getTourCategories();
     getAircraft();
     getAirports();
   }, []);
@@ -276,6 +312,7 @@ const SearchTours = ({ identity, currentFlightData }) => {
   return (
     <SearchToursContent
       tours={tours}
+      tourCategories={tourCategories}
       airports={airports}
       aircraft={aircraft}
       pluginSettings={pluginData?.appliedSettings}

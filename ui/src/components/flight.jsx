@@ -13,6 +13,7 @@ import {
   faPlaneDeparture,
   faPlus,
   faCompass,
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
 
@@ -23,7 +24,7 @@ const Flight = (props) => {
   const [shouldRender, setShouldRender] = useState(false);
   const [route, setRoute] = useState(props?.flight?.route?.join(" ") ?? "");
   const [network, setNetwork] = useState("offline"); //set as default
-//console.log(props);
+  //console.log(props);
   const depApt = GetAirport(props.flight.departureAirport, props.airports);
   const arrApt = GetAirport(props.flight.arrivalAirport, props.airports);
 
@@ -308,21 +309,18 @@ const Flight = (props) => {
           onClick={() => props.setExpandedFlight(null)}
         >
           <h2 className="hidden md:block">
-            {props.flight.code + props.flight.number}
+            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </h2>
           <h3 className="block md:hidden">
-            {props.flight.code + props.flight.number}
+            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </h3>
         </div>
         <div className="text-left">{props.flight.departureAirport}</div>
         <div className="text-left">{props.flight.arrivalAirport}</div>
-        <div className="text-left">
-          {props.flight.departureTime} - {props.flight.arrivalTime}
-        </div>
         <div className="text-left">{DecDurToStr(props.flight.flightTime)}</div>
-        <div className="text-left">{props.flight.notes}</div>
+        <div className="text-left col-span-2">{props.flight.notes}</div>
         <div className="text-left col-span-2">
-        <select
+          <select
             onChange={(e) => {
               setAircraft(GetAircraft(e.target.value, props.aircraft));
             }}
@@ -552,16 +550,60 @@ const Flight = (props) => {
           )
         }
       >
-        <div className="text-left">
-          {props.flight.code + props.flight.number}
-        </div>
-        <div className="text-left">{props.flight.departureAirport}</div>
-        <div className="text-left">{props.flight.arrivalAirport}</div>
-        <div className="text-left">
-          {props.flight.departureTime} - {props.flight.arrivalTime}
-        </div>
-        <div className="text-left">{DecDurToStr(props.flight.flightTime)}</div>
-        <div className="text-left">{props.flight.notes}</div>
+        {props.source === "tour" ? (
+          <div className="text-left col-span-2">
+            {props.flight.name + " - Leg " + props.flight.legNumber}
+            {props.flight.completed && (
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className="text-green-500 ml-1"
+            />
+          )}
+          </div>
+        ) : props.source === "schedule" ? (
+          <div className="text-left col-span-2">
+            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+          </div>
+        ) : (
+          <div className="text-left">
+            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+          </div>
+        )}
+
+        {props.source === "tour" ? (
+          <div className="text-left">
+            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+          </div>
+        ) : (
+          <div className="text-left">{props.flight.departureAirport}</div>
+        )}
+
+        {props.source === "tour" ? (
+          <div className="text-left">{props.flight.departureAirport}</div>
+        ) : (
+          <div className="text-left">{props.flight.arrivalAirport}</div>
+        )}
+
+        {props.source === "tour" ? (
+          <div className="text-left">{props.flight.arrivalAirport}</div>
+        ) : props.source === "schedule" ? (
+          <div className="text-left">{props.flight.distance}nm</div>
+        ) : (
+          <div className="text-left">
+            {DecDurToStr(props.flight.flightTime)}
+          </div>
+        )}
+
+        {props.source === "tour" ? (
+          <div className="text-left">{props.flight.distance}nm</div>
+        ) : props.source === "schedule" ? (
+          <div className="text-left">
+            {DecDurToStr(props.flight.flightTime)}
+          </div>
+        ) : (
+          <div className="text-left col-span-2">{props.flight.notes}</div>
+        )}
+
         <div
           className="text-left col-span-2"
           onClick={(e) => {
