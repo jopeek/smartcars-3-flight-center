@@ -110,6 +110,10 @@ const SearchToursContent = (props) => {
     return tour.name + " [" + tour.category + "]";
   });
 
+  const filteredTourStrings = toursStrings.filter(tour => 
+    tour.includes(tourCategory)
+  );
+
   const tourCategoriesStrings = props.tourCategories.map((category) => {
     return category.name;
   });
@@ -154,7 +158,7 @@ const SearchToursContent = (props) => {
           <div className="col-span-1 pr-1">
             <Autocomplete
               placeholder="Tours"
-              options={toursStrings}
+              options={filteredTourStrings}
               value={tour}
               onChange={(e) => {
                 setTour(e);
