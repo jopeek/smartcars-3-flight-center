@@ -354,7 +354,7 @@ const Flight = (props) => {
           </div>
         ) : (
           <div
-            className="interactive"
+            className="interactive col-span-2"
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
@@ -405,7 +405,7 @@ const Flight = (props) => {
             {DecDurToStr(props.flight.flightTime)}
           </div>
         ) : (
-          <div className="text-left col-span-2">{props.flight.notes}</div>
+          <div className="text-left">{props.flight.notes}</div>
         )}
 
         <div
@@ -663,7 +663,7 @@ const Flight = (props) => {
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
         ) : (
-          <div className="text-left">
+          <div className="text-left col-span-2">
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
         )}
@@ -707,7 +707,7 @@ const Flight = (props) => {
             {DecDurToStr(props.flight.flightTime)}
           </div>
         ) : (
-          <div className="text-left col-span-2">{props.flight.notes}</div>
+          <div className="text-left">{props.flight.notes}</div>
         )}
 
         <div
