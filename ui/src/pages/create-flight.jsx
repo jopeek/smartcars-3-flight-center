@@ -80,14 +80,14 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
             });
 
             notify("com.canadaairvirtual.flight-center", null, null, {
-                message: "Flight created",
+                message: "Flight dispatched",
                 type: "success",
             });
 
             navigate("/");
         } catch (error) {
             notify("com.canadaairvirtual.flight-center", null, null, {
-                message: "Failed to create flight",
+                message: "Failed to dispatch flight",
                 type: "danger",
             });
         }
@@ -191,7 +191,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                                 <div className="ml-3">
                                     <h3>Flight Center</h3>
                                     <h2 className="color-accent-bkg">
-                                        Charter a Flight
+                                        Dispatch a Charter Flight
                                     </h2>
                                 </div>
                             </td>
@@ -291,7 +291,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                             value={depHour}
                             min={0}
                             max={23}
-                            required
+                            
                             onChange={(e) => {
                                 setDepHour(e.target.value);
                             }}
@@ -304,7 +304,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                             value={depMin}
                             min={0}
                             max={59}
-                            required
+                            
                             onChange={(e) => {
                                 setDepMin(e.target.value);
                             }}
@@ -330,7 +330,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                             value={arrHour}
                             min={0}
                             max={23}
-                            required
+                            
                             onChange={(e) => {
                                 setArrHour(e.target.value);
                             }}
@@ -342,7 +342,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                             value={arrMin}
                             min={0}
                             max={59}
-                            required
+                            
                             onChange={(e) => {
                                 setArrMin(e.target.value);
                             }}
