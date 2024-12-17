@@ -6,12 +6,12 @@ import { request, notify, localApi } from "@tfdidesign/smartcars3-ui-sdk";
 import { useEffect } from "react";
 import { GetAirport, GetAircraft, DecDurToStr } from "../helper.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Icon } from '@iconify/react';
 import {
   faTrash,
   faCloudArrowDown,
   faRoute,
   faPlaneDeparture,
-  faPlus,
   faCompass,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
@@ -452,7 +452,7 @@ const Flight = (props) => {
                 }`}
                 data-tooltip-content="Dispatch this flight"
               >
-                <FontAwesomeIcon icon={faPlus} />
+                <Icon icon="mdi:luggage" style={{ marginRight: 0, marginTop: 0, fontSize: '1.5rem' }} />
               </button>
             )}
         </div>
@@ -743,15 +743,7 @@ const Flight = (props) => {
                 }`}
                 data-tooltip-content="Dispatch this flight"
               >
-                <span
-                  className="iconify"
-                  style={{
-                    marginTop: "0",
-                    fontSize: "1.5rem",
-                    marginRight: "0",
-                  }}
-                  data-icon="mdi:luggage"
-                ></span>
+                <Icon icon="mdi:luggage" style={{ marginRight: 0, marginTop: 0, fontSize: '1.5rem' }} />
               </button>
             )}
         </div>

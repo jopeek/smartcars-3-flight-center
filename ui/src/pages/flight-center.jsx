@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight.jsx";
+import { Icon } from '@iconify/react';
 
 const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
 
@@ -152,10 +153,7 @@ const Bids = (props) => {
                   className="button button-solid"
                 >
                   <span className="inline-flex">
-                    <span
-                      className="iconify"
-                      data-icon="mdi:airplane-landing"
-                    ></span>{" "}
+                    <Icon icon="mdi:airplane-landing" />
                     View PIREPS
                   </span>
                 </button>
@@ -166,7 +164,7 @@ const Bids = (props) => {
             <Link className="inline-link" to="/search-flights/">
               <div className="button button-solid">
                 <span className="inline-flex">
-                  <span className="iconify" data-icon="uil:schedule"></span>
+                  <Icon icon="uil:schedule" />
                   Dispatch Schedule
                 </span>
               </div>
@@ -175,10 +173,7 @@ const Bids = (props) => {
             <Link className="inline-link" to="/search-tours/">
               <div className="button button-solid ml-3">
                 <span className="inline-flex">
-                  <span
-                    className="iconify"
-                    data-icon="material-symbols:globe"
-                  ></span>
+                  <Icon icon="material-symbols:globe" />
                   Dispatch Tour
                 </span>
               </div>
@@ -187,10 +182,7 @@ const Bids = (props) => {
             <Link className="inline-link" to="/search-event/">
               <div className="button button-solid ml-3">
                 <span className="inline-flex">
-                  <span
-                    className="iconify"
-                    data-icon="material-symbols:event"
-                  ></span>
+                  <Icon icon="material-symbols:event" />
                   Dispatch Event
                 </span>
               </div>
@@ -199,7 +191,7 @@ const Bids = (props) => {
             <Link className="inline-link" to="/create-flight/">
               <div className="button button-solid ml-3">
                 <span className="inline-flex">
-                  <span className="iconify" data-icon="mdi:luggage"></span>
+                  <Icon icon="mdi:luggage" />
                   Dispatch Charter
                 </span>
               </div>
