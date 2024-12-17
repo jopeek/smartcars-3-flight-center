@@ -1,38 +1,9 @@
 {
-    "id": "com.canadaairvirtual.flight-center",
-    "name": "CAV Flight Center",
-    "version": "1.0.0",
-    "type": "airline",
-    "allowedCommunities": [402],
-    "description": "A customized flight booking system for Canada Air Virtual",
-    "availableSettings": {
-        "charter_flights": {
-            "name": "Allow Flight Chartering",
-            "description": "Allow pilots to create new single-use flights",
-            "type": "boolean",
-            "settingType": "airline",
-            "default": false
-        },
-        "allow_any_aircraft_in_fleet": {
-            "name": "Allow Any Aircraft in Fleet",
-            "description": "Allow pilots to choose any aircraft in the fleet",
-            "type": "boolean",
-            "settingType": "airline",
-            "default": false
-        },
-        "enable_booking": {
-            "name": "Enable Flight Booking",
-            "description": "Allow pilots to search for and dispatch flights",
-            "type": "boolean",
-            "settingType": "airline",
-            "default": true
-        },
-        "allow_fleet_substitution": {
-            "name": "Allow Fleet Substitution",
-            "description": "Allow pilots to choose any aircraft in the fleet when no aircraft is available",
-            "type": "boolean",
-            "settingType": "airline",
-            "default": false
-        }
-    }
+  "id": "com.canadaairvirtual.flight-center",
+  "name": "CAV Flight Center",
+  "version": "1.0.0",
+  "type": "airline",
+  "allowedCommunities": [402],
+  "description": "A customized flight booking system for Canada Air Virtual",
+  "availableSettings": {}
 }

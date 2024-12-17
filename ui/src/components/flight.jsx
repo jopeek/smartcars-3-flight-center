@@ -6,7 +6,6 @@ import { request, notify, localApi } from "@tfdidesign/smartcars3-ui-sdk";
 import { useEffect } from "react";
 import { GetAirport, GetAircraft, DecDurToStr } from "../helper.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Icon } from "@iconify/react";
 import {
   faTrash,
   faCloudArrowDown,
@@ -14,6 +13,7 @@ import {
   faPlaneDeparture,
   faCompass,
   faCheckCircle,
+  faSuitcase,
 } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
 
@@ -328,6 +328,18 @@ const Flight = (props) => {
               )}
             </h3>
           </div>
+        ) : props.source === "event" ? (
+          <div
+            className="interactive text-left col-span-2"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <h2 className="hidden md:block">
+              {props.flight.eventType + " - " + props.flight.name}
+            </h2>
+            <h3 className="block md:hidden">
+              {props.flight.eventType + " - " + props.flight.name}
+            </h3>
+          </div>
         ) : props.source === "schedule" ? (
           <div
             className="interactive text-left col-span-2"
@@ -358,28 +370,36 @@ const Flight = (props) => {
           <div className="text-left">
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
+        ) : props.source === "event" ? (
+          <div className="text-left">{props.flight.eventTime + " UTC"}</div>
         ) : (
           <div className="text-left">{props.flight.departureAirport}</div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.departureAirport}</div>
+        ) : props.source === "event" ? (
+          <div className="text-left">
+            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+          </div>
         ) : (
           <div className="text-left">{props.flight.arrivalAirport}</div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.arrivalAirport}</div>
+        ) : props.source === "event" ? (
+          <div className="text-left">{props.flight.departureAirport}</div>
         ) : props.source === "schedule" ? (
           <div className="text-left">{props.flight.distance}nm</div>
         ) : (
-          <div className="text-left">
-            {DecDurToStr(props.flight.flightTime)}
-          </div>
+          <div className="text-left">{props.flight.distance}nm</div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.distance}nm</div>
+        ) : props.source === "event" ? (
+          <div className="text-left">{props.flight.arrivalAirport}</div>
         ) : props.source === "schedule" ? (
           <div className="text-left">
             {DecDurToStr(props.flight.flightTime)}
@@ -525,10 +545,7 @@ const Flight = (props) => {
                 }`}
                 data-tooltip-content="Dispatch this flight"
               >
-                <Icon
-                  icon="mdi:luggage"
-                  style={{ marginRight: 0, marginTop: 0, fontSize: "1.5rem" }}
-                />
+                <FontAwesomeIcon icon={faSuitcase} />
               </button>
             )}
         </div>
@@ -575,7 +592,7 @@ const Flight = (props) => {
         </div>
 
         <div className="col-span-5">
-          <b>{parseInt(props.flight.distance)} nm</b>
+          <b>{parseInt(props.flight.distance)}nm</b>
         </div>
         <div className="col-span-5 text-right">
           <b>
@@ -637,6 +654,10 @@ const Flight = (props) => {
               />
             )}
           </div>
+        ) : props.source === "event" ? (
+          <div className="text-left col-span-2">
+            {props.flight.eventType + " - " + props.flight.name}
+          </div>
         ) : props.source === "schedule" ? (
           <div className="text-left col-span-2">
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
@@ -651,28 +672,36 @@ const Flight = (props) => {
           <div className="text-left">
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
+        ) : props.source === "event" ? (
+          <div className="text-left">{props.flight.eventTime + " UTC"}</div>
         ) : (
           <div className="text-left">{props.flight.departureAirport}</div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.departureAirport}</div>
+        ) : props.source === "event" ? (
+          <div className="text-left">
+            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+          </div>
         ) : (
           <div className="text-left">{props.flight.arrivalAirport}</div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.arrivalAirport}</div>
+        ) : props.source === "event" ? (
+          <div className="text-left">{props.flight.departureAirport}</div>
         ) : props.source === "schedule" ? (
           <div className="text-left">{props.flight.distance}nm</div>
         ) : (
-          <div className="text-left">
-            {DecDurToStr(props.flight.flightTime)}
-          </div>
+          <div className="text-left">{props.flight.distance}nm</div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.distance}nm</div>
+        ) : props.source === "event" ? (
+          <div className="text-left">{props.flight.arrivalAirport}</div>
         ) : props.source === "schedule" ? (
           <div className="text-left">
             {DecDurToStr(props.flight.flightTime)}
@@ -793,7 +822,7 @@ const Flight = (props) => {
               <FontAwesomeIcon icon={faRoute} />
             </button>
           )}
-          {!props.currentFlightData && (
+          {!props.currentFlightData && props.canbid && (
             <button
               onClick={flyFlight}
               className="button button-solid float-right ml-3 mb-1 mt-1"
@@ -806,6 +835,7 @@ const Flight = (props) => {
             </button>
           )}
           {!props.flight.bidID &&
+            props.canbid &&
             !(
               props.currentFlightData &&
               props.currentFlightData?.flightPlanData?.number ===
@@ -819,10 +849,7 @@ const Flight = (props) => {
                 }`}
                 data-tooltip-content="Dispatch this flight"
               >
-                <Icon
-                  icon="mdi:luggage"
-                  style={{ marginRight: 0, marginTop: 0, fontSize: "1.5rem" }}
-                />
+                <FontAwesomeIcon icon={faSuitcase} />
               </button>
             )}
         </div>

@@ -128,8 +128,8 @@ export default function Autocomplete({
           <li className="px-4 py-2">No results</li>
         )}
         {options.length > 20 && (
-          <li className="p-1 px-4 bg-slate">
-            More options available. Type to search...
+          <li className="p-1 px-4">
+            <strong>More options available. Type to search...</strong>
           </li>
         )}
       </ul>

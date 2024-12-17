@@ -6,9 +6,15 @@ import { useEffect } from "react";
 import { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRefresh } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendar,
+  faCalendarDay,
+  faGlobe,
+  faPlaneArrival,
+  faRefresh,
+  faSuitcase,
+} from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight.jsx";
-import { Icon } from '@iconify/react';
 
 const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
 
@@ -153,7 +159,7 @@ const Bids = (props) => {
                   className="button button-solid"
                 >
                   <span className="inline-flex">
-                    <Icon icon="mdi:airplane-landing" />
+                    <FontAwesomeIcon icon={faPlaneArrival} className="mr-1" style={{ marginTop: "2px" }} />
                     View PIREPS
                   </span>
                 </button>
@@ -164,7 +170,7 @@ const Bids = (props) => {
             <Link className="inline-link" to="/search-flights/">
               <div className="button button-solid">
                 <span className="inline-flex">
-                  <Icon icon="uil:schedule" />
+                  <FontAwesomeIcon icon={faCalendar} className="mr-1" style={{ marginTop: "2px" }} />
                   Dispatch Schedule
                 </span>
               </div>
@@ -173,7 +179,7 @@ const Bids = (props) => {
             <Link className="inline-link" to="/search-tours/">
               <div className="button button-solid ml-3">
                 <span className="inline-flex">
-                  <Icon icon="material-symbols:globe" />
+                  <FontAwesomeIcon icon={faGlobe} className="mr-1" style={{ marginTop: "2px" }} />
                   Dispatch Tour
                 </span>
               </div>
@@ -182,7 +188,7 @@ const Bids = (props) => {
             <Link className="inline-link" to="/search-events/">
               <div className="button button-solid ml-3">
                 <span className="inline-flex">
-                  <Icon icon="material-symbols:event" />
+                  <FontAwesomeIcon icon={faCalendarDay} className="mr-1" style={{ marginTop: "2px" }} />
                   Dispatch Event
                 </span>
               </div>
@@ -191,7 +197,7 @@ const Bids = (props) => {
             <Link className="inline-link" to="/create-flight/">
               <div className="button button-solid ml-3">
                 <span className="inline-flex">
-                  <Icon icon="mdi:luggage" />
+                  <FontAwesomeIcon icon={faSuitcase} className="mr-1" style={{ marginTop: "2px" }} />
                   Dispatch Charter
                 </span>
               </div>
@@ -219,7 +225,7 @@ const Bids = (props) => {
         <div className="text-left">Departure</div>
         <div className="text-left">Arrival</div>
         {/* <div className="text-left">Schedule</div> */}
-        <div className="text-left">Duration</div>
+        <div className="text-left">Distance</div>
         <div className="text-left col-span-2">Type</div>
         <div className="col-span-3 text-left">Aircraft</div>
       </div>
@@ -236,20 +242,17 @@ const Bids = (props) => {
                 aircraft={props.aircraft}
                 setExpandedFlight={setExpandedFlight}
                 expanded={expandedFlight === bidFlight.bidID}
-                flight={
-                  props.pluginSettings?.allow_any_aircraft_in_fleet
-                    ? {
-                        ...bidFlight,
-                        aircraft: [],
-                        defaultAircraft: bidFlight.aircraft,
-                      }
-                    : bidFlight
-                }
+                flight={{
+                  ...bidFlight,
+                  aircraft: [],
+                  defaultAircraft: bidFlight.aircraft,
+                }}
                 unbookFlight={unbookFlight}
                 simBriefInstalled={props.simBriefInstalled}
                 getBidFlights={getBidFlights}
                 recoverableFlight={recoverableFlight}
                 currentFlightData={props.currentFlightData}
+                canbid={true}
               />
             </div>
           ))

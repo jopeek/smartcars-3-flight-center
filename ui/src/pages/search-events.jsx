@@ -151,10 +151,10 @@ const SearchEventsContent = (props) => {
         className="grid grid-cols-10 data-table-header p-3 mt-3 mx-8"
       >
         <div className="col-span-2 interactive">Event</div>
+        <div className="text-left interactive">Date & Time</div>
         <div className="text-left interactive">Flight Number</div>
         <div className="text-left interactive">Departure</div>
         <div className="text-left interactive">Arrival</div>
-        <div className="text-left interactive">Distance</div>
         <div className="text-left interactive">Aircraft</div>
         <div className="text-right col-span-2"></div>
       </div>
@@ -168,18 +168,15 @@ const SearchEventsContent = (props) => {
                 aircraft={props.aircraft}
                 setExpandedFlight={setExpandedFlight}
                 expanded={expandedFlight === flight.id}
-                flight={
-                  props.pluginSettings?.allow_any_aircraft_in_fleet
-                    ? {
-                        ...flight,
-                        aircraft: [],
-                        defaultAircraft: flight.aircraft,
-                      }
-                    : flight
-                }
+                flight={{
+                  ...flight,
+                  aircraft: [],
+                  defaultAircraft: flight.aircraft,
+                }}
                 simBriefInstalled={simBriefInstalled}
                 currentFlightData={props.currentFlightData}
-                source="tour"
+                source="event"
+                canbid={flight.active}
               />
             </div>
           ))
@@ -195,10 +192,26 @@ const SearchEventsContent = (props) => {
 
 const SearchEvents = ({ identity, currentFlightData }) => {
   const [aircraft, setAircraft] = useState([]);
+  const [airports, setAirports] = useState([]);
 
   const pluginData = identity?.airline?.plugins?.find(
     (p) => p.id === "com.canadaairvirtual.flight-center"
   );
+
+  const getAirports = async () => {
+    try {
+      const response = await request({
+        url: `${baseUrl}airports`,
+        method: "GET",
+      });
+      setAirports(response);
+    } catch (error) {
+      notify("com.canadaairvirtual.flight-center", null, null, {
+        message: "Failed to fetch airports",
+        type: "danger",
+      });
+    }
+  };
 
   const getAircraft = async () => {
     try {
@@ -220,10 +233,12 @@ const SearchEvents = ({ identity, currentFlightData }) => {
 
   useEffect(() => {
     getAircraft();
+    getAirports();
   }, []);
 
   return (
     <SearchEventsContent
+      airports={airports}
       aircraft={aircraft}
       pluginSettings={pluginData?.appliedSettings}
       currentFlightData={currentFlightData}

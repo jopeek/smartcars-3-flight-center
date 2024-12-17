@@ -8,6 +8,7 @@ let cache = {
   tourLegs: {},
   tours: {},
   tourCategories: {},
+  events: {},
   airports: {},
   aircrafts: {},
   bookings: {},
@@ -234,6 +235,36 @@ module.exports = {
             return res.json(response.data);
           } catch (error) {
             log("Error while getting tours list", "error", error);
+            return res.status(500).json({});
+          }
+        },
+      },
+      searchEvents: {
+        description: "Endpoint to list events",
+        handler: async (req, res) => {
+          const entry = getCache("events", "data", req);
+
+          if (entry) {
+            return res.json(entry);
+          }
+
+          try {
+            let params = {};
+            
+            const response = await axios({
+              url: `${scIdentity.airline.settings.scriptURL}flights/searchEvents`,
+              method: "GET",
+              params: params,
+              headers: {
+                Authorization: `Bearer ${scIdentity.va_user.session}`,
+              },
+            });
+
+            storeCache("events", "data", response.data);
+
+            return res.json(response.data);
+          } catch (error) {
+            log("Error while getting events", "error", error);
             return res.status(500).json({});
           }
         },

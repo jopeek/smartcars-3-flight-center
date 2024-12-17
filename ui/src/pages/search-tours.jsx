@@ -207,18 +207,15 @@ const SearchToursContent = (props) => {
                 aircraft={props.aircraft}
                 setExpandedFlight={setExpandedFlight}
                 expanded={expandedFlight === flight.id}
-                flight={
-                  props.pluginSettings?.allow_any_aircraft_in_fleet
-                    ? {
-                        ...flight,
-                        aircraft: [],
-                        defaultAircraft: flight.aircraft,
-                      }
-                    : flight
-                }
+                flight={{
+                  ...flight,
+                  aircraft: [],
+                  defaultAircraft: flight.aircraft,
+                }}
                 simBriefInstalled={simBriefInstalled}
                 currentFlightData={props.currentFlightData}
                 source="tour"
+                canbid={true}
               />
             </div>
           ))
