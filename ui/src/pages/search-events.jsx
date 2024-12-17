@@ -3,16 +3,13 @@ import React, { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { request, notify, localApi } from "@tfdidesign/smartcars3-ui-sdk";
 import { useEffect, useRef } from "react";
-import Autocomplete from "../components/autocomplete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight";
 
 const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
 
-const SearchToursContent = (props) => {
-  const [tour, setTour] = useState("");
-  const [tourCategory, setTourCategory] = useState("");
+const SearchEventsContent = (props) => {
   const [simBriefInstalled, setSimBriefInstalled] = useState(false);
   const [expandedFlight, setExpandedFlight] = useState(-1);
   const [flights, setFlights] = useState([]);
@@ -38,11 +35,9 @@ const SearchToursContent = (props) => {
   const getFlights = async () => {
     try {
       let params = {};
-      if (tour.length >= 3) params.tour = tour;
-      if (tourCategory.length >= 3) params.tourCategory = tourCategory;
 
       const response = await request({
-        url: `${baseUrl}searchTours`,
+        url: `${baseUrl}searchEvents`,
         params: params,
         method: "GET",
       });
@@ -76,7 +71,7 @@ const SearchToursContent = (props) => {
 
   useEffect(() => {
     getFlights();
-  }, [tour, tourCategory]);
+  }, []);
 
   useLayoutEffect(() => {
     setHeight("tblBody");
@@ -104,18 +99,6 @@ const SearchToursContent = (props) => {
 
   const sortedFlights = flights !== null ? [...flights] : [];
 
-  const toursStrings = props.tours.map((tour) => {
-    return tour.name + " [" + tour.category + "]";
-  });
-
-  const filteredTourStrings = toursStrings.filter((tour) =>
-    tour.includes(tourCategory)
-  );
-
-  const tourCategoriesStrings = props.tourCategories.map((category) => {
-    return category.name;
-  });
-
   return (
     <div className="root-container">
       <div className="mb-3 mx-8">
@@ -132,7 +115,7 @@ const SearchToursContent = (props) => {
               <td>
                 <div className="ml-3">
                   <h3>Flight Center</h3>
-                  <h2 className="color-accent-bkg">Search Tours</h2>
+                  <h2 className="color-accent-bkg">Search Events</h2>
                 </div>
               </td>
             </tr>
@@ -142,32 +125,10 @@ const SearchToursContent = (props) => {
 
       <div className="groupbox mb-3 p-3 mx-8">
         <div className="grid grid-cols-4">
-          <div className="col-span-1 pr-1">
-            <Autocomplete
-              placeholder="Categories"
-              options={tourCategoriesStrings}
-              value={tourCategory}
-              onChange={(e) => {
-                setTourCategory(e);
-              }}
-              required={true}
-            />
-          </div>
-          <div className="col-span-1 pr-1">
-            <Autocomplete
-              placeholder="Tours"
-              options={filteredTourStrings}
-              value={tour}
-              onChange={(e) => {
-                setTour(e);
-              }}
-              required={true}
-            />
-          </div>
-          <div className="col-span-2">
+          <div className="col-span-4">
             <h3 className="mt-1">
-              Note: Only tour legs that you are eligible to fly will be shown
-              here.
+              Note: You will see all upcoming events, but only flights for
+              events that are currently active can be dispatched.
             </h3>
           </div>
         </div>
@@ -177,11 +138,11 @@ const SearchToursContent = (props) => {
         <h4>
           {sortedFlights.length > 0
             ? sortedFlights.length >= 100
-              ? "100+ Tour Legs Found"
+              ? "100+ Events Found"
               : sortedFlights.length > 1
-              ? sortedFlights.length + " Tour Legs Found"
-              : "1 Tour Leg Found"
-            : "No Tour Legs Found"}
+              ? sortedFlights.length + " Events Found"
+              : "1 Event Found"
+            : "No Events Found"}
         </h4>
       </div>
 
@@ -189,7 +150,7 @@ const SearchToursContent = (props) => {
         ref={widthRef}
         className="grid grid-cols-10 data-table-header p-3 mt-3 mx-8"
       >
-        <div className="col-span-2 interactive">Tour Leg</div>
+        <div className="col-span-2 interactive">Event</div>
         <div className="text-left interactive">Flight Number</div>
         <div className="text-left interactive">Departure</div>
         <div className="text-left interactive">Arrival</div>
@@ -232,60 +193,12 @@ const SearchToursContent = (props) => {
   );
 };
 
-const SearchTours = ({ identity, currentFlightData }) => {
-  const [airports, setAirports] = useState([]);
-  const [tours, setTours] = useState([]);
-  const [tourCategories, setTourCategories] = useState([]);
+const SearchEvents = ({ identity, currentFlightData }) => {
   const [aircraft, setAircraft] = useState([]);
 
   const pluginData = identity?.airline?.plugins?.find(
     (p) => p.id === "com.canadaairvirtual.flight-center"
   );
-
-  const getTours = async () => {
-    try {
-      const response = await request({
-        url: `${baseUrl}tours`,
-        method: "GET",
-      });
-      setTours(response);
-    } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
-        message: "Failed to fetch tours",
-        type: "danger",
-      });
-    }
-  };
-
-  const getTourCategories = async () => {
-    try {
-      const response = await request({
-        url: `${baseUrl}tourCategories`,
-        method: "GET",
-      });
-      setTourCategories(response);
-    } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
-        message: "Failed to fetch tour categories",
-        type: "danger",
-      });
-    }
-  };
-
-  const getAirports = async () => {
-    try {
-      const response = await request({
-        url: `${baseUrl}airports`,
-        method: "GET",
-      });
-      setAirports(response);
-    } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
-        message: "Failed to fetch airports",
-        type: "danger",
-      });
-    }
-  };
 
   const getAircraft = async () => {
     try {
@@ -306,17 +219,11 @@ const SearchTours = ({ identity, currentFlightData }) => {
   };
 
   useEffect(() => {
-    getTours();
-    getTourCategories();
     getAircraft();
-    getAirports();
   }, []);
 
   return (
-    <SearchToursContent
-      tours={tours}
-      tourCategories={tourCategories}
-      airports={airports}
+    <SearchEventsContent
       aircraft={aircraft}
       pluginSettings={pluginData?.appliedSettings}
       currentFlightData={currentFlightData}
@@ -324,4 +231,4 @@ const SearchTours = ({ identity, currentFlightData }) => {
   );
 };
 
-export default SearchTours;
+export default SearchEvents;

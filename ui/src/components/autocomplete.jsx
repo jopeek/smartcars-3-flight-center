@@ -91,7 +91,7 @@ export default function Autocomplete({
       {value && (
         <FontAwesomeIcon
           icon={faTimes}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer pr-2"
           onClick={() => handleChange("")}
         />
       )}

@@ -6,7 +6,7 @@ import { request, notify, localApi } from "@tfdidesign/smartcars3-ui-sdk";
 import { useEffect } from "react";
 import { GetAirport, GetAircraft, DecDurToStr } from "../helper.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import {
   faTrash,
   faCloudArrowDown,
@@ -302,25 +302,98 @@ const Flight = (props) => {
   }
 
   if (props.expanded) {
-    console.log("props.expanded", props.expanded);
     return (
       <div className="grid grid-cols-10 data-table-row p-3 mt-3 box-shadow select items-center">
+        {props.source === "tour" ? (
+          <div
+            className="interactive text-left col-span-2"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <h2 className="hidden md:block">
+              {props.flight.name + " - Leg " + props.flight.legNumber}
+              {props.flight.completed && (
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  className="text-green-500 ml-1"
+                />
+              )}
+            </h2>
+            <h3 className="block md:hidden">
+              {props.flight.name + " - Leg " + props.flight.legNumber}
+              {props.flight.completed && (
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  className="text-green-500 ml-1"
+                />
+              )}
+            </h3>
+          </div>
+        ) : props.source === "schedule" ? (
+          <div
+            className="interactive text-left col-span-2"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <h2 className="hidden md:block">
+              <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            </h2>
+            <h3 className="block md:hidden">
+              <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            </h3>
+          </div>
+        ) : (
+          <div
+            className="interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <h2 className="hidden md:block">
+              <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            </h2>
+            <h3 className="block md:hidden">
+              <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            </h3>
+          </div>
+        )}
+
+        {props.source === "tour" ? (
+          <div className="text-left">
+            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+          </div>
+        ) : (
+          <div className="text-left">{props.flight.departureAirport}</div>
+        )}
+
+        {props.source === "tour" ? (
+          <div className="text-left">{props.flight.departureAirport}</div>
+        ) : (
+          <div className="text-left">{props.flight.arrivalAirport}</div>
+        )}
+
+        {props.source === "tour" ? (
+          <div className="text-left">{props.flight.arrivalAirport}</div>
+        ) : props.source === "schedule" ? (
+          <div className="text-left">{props.flight.distance}nm</div>
+        ) : (
+          <div className="text-left">
+            {DecDurToStr(props.flight.flightTime)}
+          </div>
+        )}
+
+        {props.source === "tour" ? (
+          <div className="text-left">{props.flight.distance}nm</div>
+        ) : props.source === "schedule" ? (
+          <div className="text-left">
+            {DecDurToStr(props.flight.flightTime)}
+          </div>
+        ) : (
+          <div className="text-left col-span-2">{props.flight.notes}</div>
+        )}
+
         <div
-          className="interactive"
-          onClick={() => props.setExpandedFlight(null)}
+          className="text-left col-span-2"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
-          <h2 className="hidden md:block">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
-          </h2>
-          <h3 className="block md:hidden">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
-          </h3>
-        </div>
-        <div className="text-left">{props.flight.departureAirport}</div>
-        <div className="text-left">{props.flight.arrivalAirport}</div>
-        <div className="text-left">{DecDurToStr(props.flight.flightTime)}</div>
-        <div className="text-left col-span-2">{props.flight.notes}</div>
-        <div className="text-left col-span-2">
           <select
             onChange={(e) => {
               setAircraft(GetAircraft(e.target.value, props.aircraft));
@@ -452,7 +525,10 @@ const Flight = (props) => {
                 }`}
                 data-tooltip-content="Dispatch this flight"
               >
-                <Icon icon="mdi:luggage" style={{ marginRight: 0, marginTop: 0, fontSize: '1.5rem' }} />
+                <Icon
+                  icon="mdi:luggage"
+                  style={{ marginRight: 0, marginTop: 0, fontSize: "1.5rem" }}
+                />
               </button>
             )}
         </div>
@@ -743,7 +819,10 @@ const Flight = (props) => {
                 }`}
                 data-tooltip-content="Dispatch this flight"
               >
-                <Icon icon="mdi:luggage" style={{ marginRight: 0, marginTop: 0, fontSize: '1.5rem' }} />
+                <Icon
+                  icon="mdi:luggage"
+                  style={{ marginRight: 0, marginTop: 0, fontSize: "1.5rem" }}
+                />
               </button>
             )}
         </div>

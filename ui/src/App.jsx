@@ -6,6 +6,7 @@ import SearchFlights from "./pages/search-flights";
 import FlightCenter from "./pages/flight-center";
 import CreateFlight from "./pages/create-flight";
 import SearchTours from "./pages/search-tours";
+import SearchEvents from "./pages/search-events";
 import Loading from "./components/loading";
 
 function MainApp() {
@@ -120,6 +121,19 @@ function MainApp() {
                 element={
                     enableBooking ? (
                         <SearchTours
+                            identity={identity}
+                            currentFlightData={currentFlightData}
+                        />
+                    ) : (
+                        <Navigate to="/" />
+                    )
+                }
+            />
+            <Route
+                path="/search-events/"
+                element={
+                    enableBooking ? (
+                        <SearchEvents
                             identity={identity}
                             currentFlightData={currentFlightData}
                         />

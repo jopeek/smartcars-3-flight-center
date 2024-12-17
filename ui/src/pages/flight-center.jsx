@@ -179,7 +179,7 @@ const Bids = (props) => {
               </div>
             </Link>
 
-            <Link className="inline-link" to="/search-event/">
+            <Link className="inline-link" to="/search-events/">
               <div className="button button-solid ml-3">
                 <span className="inline-flex">
                   <Icon icon="material-symbols:event" />

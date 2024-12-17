@@ -52,3 +52,7 @@ img.airlineImage {
 .text-green-500 {
     color: rgb(34 197 94);
 }
+
+.grid div {
+    padding-right: 0.5rem;
+}
