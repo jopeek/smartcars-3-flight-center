@@ -256,7 +256,7 @@ const Flight = (props) => {
 
   const planWithSimBrief = async () => {
     if (!aircraft) {
-      return notify("com.canadaairvirtual.flight-center", null, null, {
+      return notify("com.canadaairvirtual.flight-center", null, "No suitable aircraft for this flight", {
         message: "No suitable aircraft for this flight",
         type: "danger",
       });
