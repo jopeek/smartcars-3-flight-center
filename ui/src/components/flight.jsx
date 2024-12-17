@@ -261,14 +261,17 @@ const Flight = (props) => {
         type: "danger",
       });
     }
+    
     const bidID = props.flight.bidID ? props.flight.bidID : await _bidFlight();
 
     try {
+      const airline = props.flight.code.slice(0, 3);
+      const flightNumber = props.flight.code.slice(3);
       await localApi("api/com.tfdidesign.simbrief/setflightinfo", "POST", {
         flightInfo: {
           bidId: bidID,
-          airline: props.flight.code,
-          flightNumber: props.flight.number,
+          airline: airline,
+          flightNumber: flightNumber,
           departure: depApt,
           arrival: arrApt,
           route: route || undefined,
@@ -510,11 +513,12 @@ const Flight = (props) => {
           {props.simBriefInstalled && !!!props.currentFlightData && (
             <button
               onClick={planWithSimBrief}
-              className="button button-solid float-right ml-3 mb-1 mt-1"
+              className={`button button-solid float-right ml-3 mb-1 mt-1 ${!aircraft || !props.canbid ? 'button-disabled' : ''}`}
               data-tooltip-id={`bid-${
                 props.flight.bidID ? props.flight.bidID : props.flight.id
               }`}
               data-tooltip-content="Plan with SimBrief"
+              disabled={!aircraft || !props.canbid}
             >
               <FontAwesomeIcon icon={faRoute} />
             </button>
@@ -522,11 +526,12 @@ const Flight = (props) => {
           {!props.currentFlightData && (
             <button
               onClick={flyFlight}
-              className="button button-solid float-right ml-3 mb-1 mt-1"
+              className={`button button-solid float-right ml-3 mb-1 mt-1 ${!props.canbid ? 'button-disabled' : ''}`}
               data-tooltip-id={`bid-${
                 props.flight.bidID ? props.flight.bidID : props.flight.id
               }`}
               data-tooltip-content="Fly this flight"
+              disabled={!props.canbid}
             >
               <FontAwesomeIcon icon={faPlaneDeparture} />
             </button>
@@ -539,11 +544,12 @@ const Flight = (props) => {
             ) && (
               <button
                 onClick={bidFlight}
-                className="button button-solid float-right ml-3 mb-1 mt-1"
+                className={`button button-solid float-right ml-3 mb-1 mt-1 ${!props.canbid ? 'button-disabled' : ''}`}
                 data-tooltip-id={`bid-${
                   props.flight.bidID ? props.flight.bidID : props.flight.id
                 }`}
                 data-tooltip-content="Dispatch this flight"
+              disabled={!props.canbid}
               >
                 <FontAwesomeIcon icon={faSuitcase} />
               </button>
@@ -813,29 +819,30 @@ const Flight = (props) => {
           {props.simBriefInstalled && !!!props.currentFlightData && (
             <button
               onClick={planWithSimBrief}
-              className="button button-solid float-right ml-3 mb-1 mt-1"
+              className={`button button-solid float-right ml-3 mb-1 mt-1 ${!aircraft || !props.canbid ? 'button-disabled' : ''}`}
               data-tooltip-id={`bid-${
                 props.flight.bidID ? props.flight.bidID : props.flight.id
               }`}
               data-tooltip-content="Plan with SimBrief"
+              disabled={!aircraft || !props.canbid}
             >
               <FontAwesomeIcon icon={faRoute} />
             </button>
           )}
-          {!props.currentFlightData && props.canbid && (
+          {!props.currentFlightData && (
             <button
               onClick={flyFlight}
-              className="button button-solid float-right ml-3 mb-1 mt-1"
+              className={`button button-solid float-right ml-3 mb-1 mt-1 ${!props.canbid ? 'button-disabled' : ''}`}
               data-tooltip-id={`bid-${
                 props.flight.bidID ? props.flight.bidID : props.flight.id
               }`}
               data-tooltip-content="Fly this flight"
+              disabled={!props.canbid}
             >
               <FontAwesomeIcon icon={faPlaneDeparture} />
             </button>
           )}
           {!props.flight.bidID &&
-            props.canbid &&
             !(
               props.currentFlightData &&
               props.currentFlightData?.flightPlanData?.number ===
@@ -843,11 +850,12 @@ const Flight = (props) => {
             ) && (
               <button
                 onClick={bidFlight}
-                className="button button-solid float-right ml-3 mb-1 mt-1"
+                className={`button button-solid float-right ml-3 mb-1 mt-1 ${!props.canbid ? 'button-disabled' : ''}`}
                 data-tooltip-id={`bid-${
                   props.flight.bidID ? props.flight.bidID : props.flight.id
                 }`}
                 data-tooltip-content="Dispatch this flight"
+              disabled={!props.canbid}
               >
                 <FontAwesomeIcon icon={faSuitcase} />
               </button>
