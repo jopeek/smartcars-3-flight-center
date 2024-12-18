@@ -62,3 +62,26 @@ img.airlineImage {
   cursor: not-allowed; /* Change cursor to indicate disabled state */
   opacity: 0.6; /* Reduce opacity */
 }
+
+.info-alert {
+  display: flex;
+  align-items: flex-start; /* Align content at the top */
+  padding: 1rem; /* Same as Tailwind's p-4 */
+  margin-bottom: 1rem; /* Same as Tailwind's mb-4 */
+  background-color: #ebf8ff; /* Same as Tailwind's bg-blue-100 */
+  color: #2b6cb0; /* Same as Tailwind's text-blue-700 */
+  border-radius: 0.5rem; /* Same as Tailwind's rounded-lg */
+}
+
+.info-alert-icon {
+  width: 1.5rem; /* Same as Tailwind's w-6 */
+  height: 1.5rem; /* Same as Tailwind's h-6 */
+  flex-shrink: 0; /* Prevent the icon from shrinking */
+  margin-right: 0.75rem; /* Same as Tailwind's mr-3 */
+  color: #3182ce; /* Same as Tailwind's text-blue-500 */
+}
+
+.info-alert-content {
+  font-size: 1rem; /* Default font size */
+  font-weight: 500; /* Same as Tailwind's font-medium */
+}

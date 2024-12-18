@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { request, notify, localApi } from "@tfdidesign/smartcars3-ui-sdk";
 import { useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight";
 
 const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
@@ -123,14 +123,15 @@ const SearchEventsContent = (props) => {
         </table>
       </div>
 
-      <div className="groupbox mb-3 p-3 mx-8">
-        <div className="grid grid-cols-4">
-          <div className="col-span-4">
-            <h3 className="mt-1">
-              Note: You will see all upcoming events, but only flights for
-              events that are currently active can be dispatched.
-            </h3>
-          </div>
+      <div className="info-alert mb-3 mx-8" role="alert">
+        <FontAwesomeIcon
+          icon={faInfoCircle}
+          className="mr-2"
+          style={{ fontSize: "1rem", marginTop: "2px" }}
+        />
+        <div className="info-alert-content">
+          You will see all upcoming events, but only flights for events that are
+          currently active can be dispatched.
         </div>
       </div>
 
