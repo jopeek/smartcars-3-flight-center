@@ -256,12 +256,17 @@ const Flight = (props) => {
 
   const planWithSimBrief = async () => {
     if (!aircraft) {
-      return notify("com.canadaairvirtual.flight-center", null, "No suitable aircraft for this flight", {
-        message: "No suitable aircraft for this flight",
-        type: "danger",
-      });
+      return notify(
+        "com.canadaairvirtual.flight-center",
+        null,
+        "No suitable aircraft for this flight",
+        {
+          message: "No suitable aircraft for this flight",
+          type: "danger",
+        }
+      );
     }
-    
+
     const bidID = props.flight.bidID ? props.flight.bidID : await _bidFlight();
 
     try {
@@ -309,7 +314,7 @@ const Flight = (props) => {
       <div className="grid grid-cols-10 data-table-row p-3 mt-3 box-shadow select items-center">
         {props.source === "tour" ? (
           <div
-            className="interactive text-left col-span-2"
+            className="text-left col-span-2 interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
@@ -333,7 +338,7 @@ const Flight = (props) => {
           </div>
         ) : props.source === "event" ? (
           <div
-            className="interactive text-left col-span-2"
+            className="text-left col-span-2 interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
@@ -345,7 +350,7 @@ const Flight = (props) => {
           </div>
         ) : props.source === "schedule" ? (
           <div
-            className="interactive text-left col-span-2"
+            className="text-left col-span-2 interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
@@ -357,7 +362,7 @@ const Flight = (props) => {
           </div>
         ) : (
           <div
-            className="interactive col-span-2"
+            className="col-span-2 interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
@@ -370,45 +375,127 @@ const Flight = (props) => {
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left">
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
         ) : props.source === "event" ? (
-          <div className="text-left">{props.flight.eventTime + " UTC"}</div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            {props.flight.eventTime + " UTC"}
+          </div>
         ) : (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <span
+              dangerouslySetInnerHTML={{
+                __html: props.flight.departureAirport,
+              }}
+            />
+          </div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <span
+              dangerouslySetInnerHTML={{
+                __html: props.flight.departureAirport,
+              }}
+            />
+          </div>
         ) : props.source === "event" ? (
-          <div className="text-left">
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
         ) : (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <span
+              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
+            />
+          </div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <span
+              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
+            />
+          </div>
         ) : props.source === "event" ? (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <span
+              dangerouslySetInnerHTML={{
+                __html: props.flight.departureAirport,
+              }}
+            />
+          </div>
         ) : props.source === "schedule" ? (
-          <div className="text-left">{props.flight.distance}nm</div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            {props.flight.distance}nm
+          </div>
         ) : (
-          <div className="text-left">{props.flight.distance}nm</div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            {props.flight.distance}nm
+          </div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left">{props.flight.distance}nm</div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            {props.flight.distance}nm
+          </div>
         ) : props.source === "event" ? (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            <span
+              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
+            />
+          </div>
         ) : props.source === "schedule" ? (
-          <div className="text-left">
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
             {DecDurToStr(props.flight.flightTime)}
           </div>
         ) : (
-          <div className="text-left">{props.flight.notes}</div>
+          <div
+            className="text-left interactive"
+            onClick={() => props.setExpandedFlight(null)}
+          >
+            {props.flight.notes}
+          </div>
         )}
 
         <div
@@ -513,7 +600,9 @@ const Flight = (props) => {
           {props.simBriefInstalled && !!!props.currentFlightData && (
             <button
               onClick={planWithSimBrief}
-              className={`button button-solid float-right ml-3 mb-1 mt-1 ${!aircraft || !props.canbid ? 'button-disabled' : ''}`}
+              className={`button button-solid float-right ml-3 mb-1 mt-1 ${
+                !aircraft || !props.canbid ? "button-disabled" : ""
+              }`}
               data-tooltip-id={`bid-${
                 props.flight.bidID ? props.flight.bidID : props.flight.id
               }`}
@@ -526,7 +615,9 @@ const Flight = (props) => {
           {!props.currentFlightData && (
             <button
               onClick={flyFlight}
-              className={`button button-solid float-right ml-3 mb-1 mt-1 ${!props.canbid ? 'button-disabled' : ''}`}
+              className={`button button-solid float-right ml-3 mb-1 mt-1 ${
+                !props.canbid ? "button-disabled" : ""
+              }`}
               data-tooltip-id={`bid-${
                 props.flight.bidID ? props.flight.bidID : props.flight.id
               }`}
@@ -544,12 +635,14 @@ const Flight = (props) => {
             ) && (
               <button
                 onClick={bidFlight}
-                className={`button button-solid float-right ml-3 mb-1 mt-1 ${!props.canbid ? 'button-disabled' : ''}`}
+                className={`button button-solid float-right ml-3 mb-1 mt-1 ${
+                  !props.canbid ? "button-disabled" : ""
+                }`}
                 data-tooltip-id={`bid-${
                   props.flight.bidID ? props.flight.bidID : props.flight.id
                 }`}
                 data-tooltip-content="Dispatch this flight"
-              disabled={!props.canbid}
+                disabled={!props.canbid}
               >
                 <FontAwesomeIcon icon={faSuitcase} />
               </button>
@@ -681,23 +774,49 @@ const Flight = (props) => {
         ) : props.source === "event" ? (
           <div className="text-left">{props.flight.eventTime + " UTC"}</div>
         ) : (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
+          <div className="text-left">
+            <span
+              dangerouslySetInnerHTML={{
+                __html: props.flight.departureAirport,
+              }}
+            />
+          </div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
+          <div className="text-left">
+            <span
+              dangerouslySetInnerHTML={{
+                __html: props.flight.departureAirport,
+              }}
+            />
+          </div>
         ) : props.source === "event" ? (
           <div className="text-left">
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
         ) : (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
+          <div className="text-left">
+            <span
+              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
+            />
+          </div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
+          <div className="text-left">
+            <span
+              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
+            />
+          </div>
         ) : props.source === "event" ? (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
+          <div className="text-left">
+            <span
+              dangerouslySetInnerHTML={{
+                __html: props.flight.departureAirport,
+              }}
+            />
+          </div>
         ) : props.source === "schedule" ? (
           <div className="text-left">{props.flight.distance}nm</div>
         ) : (
@@ -707,7 +826,11 @@ const Flight = (props) => {
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.distance}nm</div>
         ) : props.source === "event" ? (
-          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
+          <div className="text-left">
+            <span
+              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
+            />
+          </div>
         ) : props.source === "schedule" ? (
           <div className="text-left">
             {DecDurToStr(props.flight.flightTime)}
@@ -819,7 +942,9 @@ const Flight = (props) => {
           {props.simBriefInstalled && !!!props.currentFlightData && (
             <button
               onClick={planWithSimBrief}
-              className={`button button-solid float-right ml-3 mb-1 mt-1 ${!aircraft || !props.canbid ? 'button-disabled' : ''}`}
+              className={`button button-solid float-right ml-3 mb-1 mt-1 ${
+                !aircraft || !props.canbid ? "button-disabled" : ""
+              }`}
               data-tooltip-id={`bid-${
                 props.flight.bidID ? props.flight.bidID : props.flight.id
               }`}
@@ -832,7 +957,9 @@ const Flight = (props) => {
           {!props.currentFlightData && (
             <button
               onClick={flyFlight}
-              className={`button button-solid float-right ml-3 mb-1 mt-1 ${!props.canbid ? 'button-disabled' : ''}`}
+              className={`button button-solid float-right ml-3 mb-1 mt-1 ${
+                !props.canbid ? "button-disabled" : ""
+              }`}
               data-tooltip-id={`bid-${
                 props.flight.bidID ? props.flight.bidID : props.flight.id
               }`}
@@ -850,12 +977,14 @@ const Flight = (props) => {
             ) && (
               <button
                 onClick={bidFlight}
-                className={`button button-solid float-right ml-3 mb-1 mt-1 ${!props.canbid ? 'button-disabled' : ''}`}
+                className={`button button-solid float-right ml-3 mb-1 mt-1 ${
+                  !props.canbid ? "button-disabled" : ""
+                }`}
                 data-tooltip-id={`bid-${
                   props.flight.bidID ? props.flight.bidID : props.flight.id
                 }`}
                 data-tooltip-content="Dispatch this flight"
-              disabled={!props.canbid}
+                disabled={!props.canbid}
               >
                 <FontAwesomeIcon icon={faSuitcase} />
               </button>
