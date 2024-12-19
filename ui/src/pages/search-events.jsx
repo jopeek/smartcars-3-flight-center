@@ -183,7 +183,7 @@ const SearchEventsContent = (props) => {
           ))
         ) : (
           <div className="data-table-row p-3 mt-3 mr-8">
-            No flights matching the search parameters were found.
+            No flights matching the search parameters were found or the results are still loading. Please be patient.
           </div>
         )}
       </div>
