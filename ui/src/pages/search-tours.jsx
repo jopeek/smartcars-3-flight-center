@@ -140,17 +140,6 @@ const SearchToursContent = (props) => {
         </table>
       </div>
 
-      <div className="info-alert mb-3 mx-8" role="alert">
-        <FontAwesomeIcon
-          icon={faInfoCircle}
-          className="mr-2"
-          style={{ fontSize: "1rem", marginTop: "2px" }}
-        />
-        <div className="info-alert-content">
-          Only tour legs that you are eligible to fly will be shown here.
-        </div>
-      </div>
-
       <div className="groupbox mb-3 p-3 mx-8">
         <div className="grid grid-cols-4">
           <div className="col-span-1 pr-1">
@@ -175,6 +164,17 @@ const SearchToursContent = (props) => {
               required={true}
             />
           </div>
+        </div>
+      </div>
+
+      <div className="info-alert mb-3 mx-8" role="alert">
+        <FontAwesomeIcon
+          icon={faInfoCircle}
+          className="mr-2"
+          style={{ fontSize: "1rem", marginTop: "2px" }}
+        />
+        <div className="info-alert-content">
+          Only tour legs that you are eligible to fly will be shown here.
         </div>
       </div>
 

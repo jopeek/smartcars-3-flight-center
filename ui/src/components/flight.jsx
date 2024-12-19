@@ -25,8 +25,8 @@ const Flight = (props) => {
   const [route, setRoute] = useState(props?.flight?.route?.join(" ") ?? "");
   const [network, setNetwork] = useState("offline"); //set as default
   //console.log(props);
-  const depApt = GetAirport(props.flight.departureAirport, props.airports);
-  const arrApt = GetAirport(props.flight.arrivalAirport, props.airports);
+  const depApt = GetAirport(props.flight.departureAirportRaw, props.airports);
+  const arrApt = GetAirport(props.flight.arrivalAirportRaw, props.airports);
 
   const navigate = useNavigate();
 
@@ -376,23 +376,23 @@ const Flight = (props) => {
         ) : props.source === "event" ? (
           <div className="text-left">{props.flight.eventTime + " UTC"}</div>
         ) : (
-          <div className="text-left">{props.flight.departureAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left">{props.flight.departureAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
         ) : props.source === "event" ? (
           <div className="text-left">
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
         ) : (
-          <div className="text-left">{props.flight.arrivalAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left">{props.flight.arrivalAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
         ) : props.source === "event" ? (
-          <div className="text-left">{props.flight.departureAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
         ) : props.source === "schedule" ? (
           <div className="text-left">{props.flight.distance}nm</div>
         ) : (
@@ -402,7 +402,7 @@ const Flight = (props) => {
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.distance}nm</div>
         ) : props.source === "event" ? (
-          <div className="text-left">{props.flight.arrivalAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
         ) : props.source === "schedule" ? (
           <div className="text-left">
             {DecDurToStr(props.flight.flightTime)}
@@ -681,23 +681,23 @@ const Flight = (props) => {
         ) : props.source === "event" ? (
           <div className="text-left">{props.flight.eventTime + " UTC"}</div>
         ) : (
-          <div className="text-left">{props.flight.departureAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left">{props.flight.departureAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
         ) : props.source === "event" ? (
           <div className="text-left">
             <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
           </div>
         ) : (
-          <div className="text-left">{props.flight.arrivalAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
         )}
 
         {props.source === "tour" ? (
-          <div className="text-left">{props.flight.arrivalAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
         ) : props.source === "event" ? (
-          <div className="text-left">{props.flight.departureAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.departureAirport }} /></div>
         ) : props.source === "schedule" ? (
           <div className="text-left">{props.flight.distance}nm</div>
         ) : (
@@ -707,7 +707,7 @@ const Flight = (props) => {
         {props.source === "tour" ? (
           <div className="text-left">{props.flight.distance}nm</div>
         ) : props.source === "event" ? (
-          <div className="text-left">{props.flight.arrivalAirport}</div>
+          <div className="text-left"><span dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }} /></div>
         ) : props.source === "schedule" ? (
           <div className="text-left">
             {DecDurToStr(props.flight.flightTime)}
