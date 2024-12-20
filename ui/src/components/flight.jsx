@@ -25,8 +25,8 @@ const Flight = (props) => {
   const [route, setRoute] = useState(props?.flight?.route?.join(" ") ?? "");
   const [network, setNetwork] = useState("offline"); //set as default
   //console.log(props);
-  const depApt = GetAirport(props.flight.departureAirportRaw, props.airports);
-  const arrApt = GetAirport(props.flight.arrivalAirportRaw, props.airports);
+  const depApt = GetAirport(props.flight.departureAirport, props.airports);
+  const arrApt = GetAirport(props.flight.arrivalAirport, props.airports);
 
   const navigate = useNavigate();
 
@@ -354,10 +354,28 @@ const Flight = (props) => {
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
-              <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+              <span class="text-nowrap flex items-center">
+                {props.flight.airlineImage && (
+                  <img
+                    src={props.flight.airlineImage}
+                    alt="Airline Logo"
+                    className="img-circle airlineImage"
+                  />
+                )}
+                {props.flight.number}
+              </span>
             </h2>
             <h3 className="block md:hidden">
-              <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+              <span class="text-nowrap flex items-center">
+                {props.flight.airlineImage && (
+                  <img
+                    src={props.flight.airlineImage}
+                    alt="Airline Logo"
+                    className="img-circle airlineImage"
+                  />
+                )}
+                {props.flight.number}
+              </span>
             </h3>
           </div>
         ) : (
@@ -366,10 +384,26 @@ const Flight = (props) => {
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
-              <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+              <span class="text-nowrap flex items-center">
+                {props.flight.airlineImage && (
+                  <img
+                    src={props.flight.airlineImage}
+                    alt="Airline Logo"
+                    className="img-circle airlineImage"
+                  />
+                )}
+                {props.flight.number}
+              </span>
             </h2>
             <h3 className="block md:hidden">
-              <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+              {props.flight.airlineImage && (
+                <img
+                  src={props.flight.airlineImage}
+                  alt="Airline Logo"
+                  className="img-circle airlineImage"
+                />
+              )}
+              {props.flight.number}
             </h3>
           </div>
         )}
@@ -379,7 +413,16 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            <span class="text-nowrap flex items-center">
+              {props.flight.airlineImage && (
+                <img
+                  src={props.flight.airlineImage}
+                  alt="Airline Logo"
+                  className="img-circle airlineImage"
+                />
+              )}
+              {props.flight.number}
+            </span>
           </div>
         ) : props.source === "event" ? (
           <div
@@ -393,11 +436,16 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span
-              dangerouslySetInnerHTML={{
-                __html: props.flight.departureAirport,
-              }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.departureAirportImage && (
+                <img
+                  src={props.flight.departureAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.departureAirport}
+            </span>
           </div>
         )}
 
@@ -406,27 +454,48 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span
-              dangerouslySetInnerHTML={{
-                __html: props.flight.departureAirport,
-              }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.departureAirportImage && (
+                <img
+                  src={props.flight.departureAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.departureAirport}
+            </span>
           </div>
         ) : props.source === "event" ? (
           <div
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            <span class="text-nowrap flex items-center">
+              {props.flight.airlineImage && (
+                <img
+                  src={props.flight.airlineImage}
+                  alt="Airline Logo"
+                  className="img-circle airlineImage"
+                />
+              )}
+              {props.flight.number}
+            </span>
           </div>
         ) : (
           <div
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span
-              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.arrivalAirportImage && (
+                <img
+                  src={props.flight.arrivalAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.arrivalAirport}
+            </span>
           </div>
         )}
 
@@ -435,20 +504,32 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span
-              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.arrivalAirportImage && (
+                <img
+                  src={props.flight.arrivalAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.arrivalAirport}
+            </span>
           </div>
         ) : props.source === "event" ? (
           <div
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span
-              dangerouslySetInnerHTML={{
-                __html: props.flight.departureAirport,
-              }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.departureAirportImage && (
+                <img
+                  src={props.flight.departureAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.departureAirport}
+            </span>
           </div>
         ) : props.source === "schedule" ? (
           <div
@@ -478,9 +559,16 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span
-              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.arrivalAirportImage && (
+                <img
+                  src={props.flight.arrivalAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.arrivalAirport}
+            </span>
           </div>
         ) : props.source === "schedule" ? (
           <div
@@ -759,63 +847,128 @@ const Flight = (props) => {
           </div>
         ) : props.source === "schedule" ? (
           <div className="text-left col-span-2">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            <span class="text-nowrap flex items-center">
+              {props.flight.airlineImage && (
+                <img
+                  src={props.flight.airlineImage}
+                  alt="Airline Logo"
+                  className="img-circle airlineImage"
+                />
+              )}
+              {props.flight.number}
+            </span>
           </div>
         ) : (
           <div className="text-left col-span-2">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            <span class="text-nowrap flex items-center">
+              {props.flight.airlineImage && (
+                <img
+                  src={props.flight.airlineImage}
+                  alt="Airline Logo"
+                  className="img-circle airlineImage"
+                />
+              )}
+              {props.flight.number}
+            </span>
           </div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            <span class="text-nowrap flex items-center">
+              {props.flight.airlineImage && (
+                <img
+                  src={props.flight.airlineImage}
+                  alt="Airline Logo"
+                  className="img-circle airlineImage"
+                />
+              )}
+              {props.flight.number}
+            </span>
           </div>
         ) : props.source === "event" ? (
           <div className="text-left">{props.flight.eventTime + " UTC"}</div>
         ) : (
           <div className="text-left">
-            <span
-              dangerouslySetInnerHTML={{
-                __html: props.flight.departureAirport,
-              }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.departureAirportImage && (
+                <img
+                  src={props.flight.departureAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.departureAirport}
+            </span>
           </div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">
-            <span
-              dangerouslySetInnerHTML={{
-                __html: props.flight.departureAirport,
-              }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.departureAirportImage && (
+                <img
+                  src={props.flight.departureAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.departureAirport}
+            </span>
           </div>
         ) : props.source === "event" ? (
           <div className="text-left">
-            <span dangerouslySetInnerHTML={{ __html: props.flight.number }} />
+            <span class="text-nowrap flex items-center">
+              {props.flight.airlineImage && (
+                <img
+                  src={props.flight.airlineImage}
+                  alt="Airline Logo"
+                  className="img-circle airlineImage"
+                />
+              )}
+              {props.flight.number}
+            </span>
           </div>
         ) : (
           <div className="text-left">
-            <span
-              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.arrivalAirportImage && (
+                <img
+                  src={props.flight.arrivalAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.arrivalAirport}
+            </span>
           </div>
         )}
 
         {props.source === "tour" ? (
           <div className="text-left">
-            <span
-              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.arrivalAirportImage && (
+                <img
+                  src={props.flight.arrivalAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.arrivalAirport}
+            </span>
           </div>
         ) : props.source === "event" ? (
           <div className="text-left">
-            <span
-              dangerouslySetInnerHTML={{
-                __html: props.flight.departureAirport,
-              }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.departureAirportImage && (
+                <img
+                  src={props.flight.departureAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.departureAirport}
+            </span>
           </div>
         ) : props.source === "schedule" ? (
           <div className="text-left">{props.flight.distance}nm</div>
@@ -827,9 +980,16 @@ const Flight = (props) => {
           <div className="text-left">{props.flight.distance}nm</div>
         ) : props.source === "event" ? (
           <div className="text-left">
-            <span
-              dangerouslySetInnerHTML={{ __html: props.flight.arrivalAirport }}
-            />
+            <span class="text-nowrap flex items-center">
+              {props.flight.arrivalAirportImage && (
+                <img
+                  src={props.flight.arrivalAirportImage}
+                  alt="Country Flag"
+                  className="img-circle countryImage"
+                />
+              )}
+              {props.flight.arrivalAirport}
+            </span>
           </div>
         ) : props.source === "schedule" ? (
           <div className="text-left">
