@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight";
 
-const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.cav.flight-center/";
 
 const SearchFlightsContent = (props) => {
   const [depApt, setDepApt] = useState("");
@@ -90,13 +90,13 @@ const SearchFlightsContent = (props) => {
         setFlights(response);
       } else {
         setFlights([]);
-        notify("com.canadaairvirtual.flight-center", null, null, {
+        notify("com.cav.flight-center", null, null, {
           message: "Error parsing flights",
           type: "danger",
         });
       }
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to fetch flights",
         type: "danger",
       });
@@ -489,7 +489,7 @@ const SearchFlights = ({ identity, currentFlightData }) => {
   const [aircraft, setAircraft] = useState([]);
 
   const pluginData = identity?.airline?.plugins?.find(
-    (p) => p.id === "com.canadaairvirtual.flight-center"
+    (p) => p.id === "com.cav.flight-center"
   );
 
   const getAirports = async () => {
@@ -500,7 +500,7 @@ const SearchFlights = ({ identity, currentFlightData }) => {
       });
       setAirports(response);
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to fetch airports",
         type: "danger",
       });
@@ -518,7 +518,7 @@ const SearchFlights = ({ identity, currentFlightData }) => {
 
       setAircraft(response);
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to fetch aircraft",
         type: "danger",
       });

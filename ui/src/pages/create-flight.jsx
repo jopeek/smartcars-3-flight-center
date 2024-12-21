@@ -8,7 +8,7 @@ import Autocomplete from "../components/autocomplete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.cav.flight-center/";
 
 const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -79,14 +79,14 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                 },
             });
 
-            notify("com.canadaairvirtual.flight-center", null, null, {
+            notify("com.cav.flight-center", null, null, {
                 message: "Flight dispatched",
                 type: "success",
             });
 
             navigate("/");
         } catch (error) {
-            notify("com.canadaairvirtual.flight-center", null, null, {
+            notify("com.cav.flight-center", null, null, {
                 message: "Failed to dispatch flight",
                 type: "danger",
             });
@@ -114,7 +114,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
             !settings["com.tfdidesign.simbrief"] ||
             !settings["com.tfdidesign.simbrief"].simbriefUsername
         ) {
-            notify("com.canadaairvirtual.flight-center", null, null, {
+            notify("com.cav.flight-center", null, null, {
                 message: "SimBrief username not set",
                 type: "danger",
             });
@@ -409,7 +409,7 @@ const CreateFlight = ({ identity }) => {
             });
             setAirports(response);
         } catch (error) {
-            notify("com.canadaairvirtual.flight-center", null, null, {
+            notify("com.cav.flight-center", null, null, {
                 message: "Failed to fetch airports",
                 type: "danger",
             });
@@ -427,7 +427,7 @@ const CreateFlight = ({ identity }) => {
 
             setAircraft(response);
         } catch (error) {
-            notify("com.canadaairvirtual.flight-center", null, null, {
+            notify("com.cav.flight-center", null, null, {
                 message: "Failed to fetch aircraft",
                 type: "danger",
             });

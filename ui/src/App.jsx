@@ -72,7 +72,7 @@ function MainApp() {
 
       setIdentity(response);
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to fetch identity.",
         type: "warning",
       });

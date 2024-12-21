@@ -4,12 +4,17 @@ import { Link } from "react-router-dom";
 import { request, notify, localApi } from "@tfdidesign/smartcars3-ui-sdk";
 import { useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faInfoCircle,
+  faRefresh,
+} from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight";
 
-const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.cav.flight-center/";
 
 const SearchEventsContent = (props) => {
+  const [flightsLoading, setFlightsLoading] = useState(false);
   const [simBriefInstalled, setSimBriefInstalled] = useState(false);
   const [expandedFlight, setExpandedFlight] = useState(-1);
   const [flights, setFlights] = useState([]);
@@ -33,12 +38,16 @@ const SearchEventsContent = (props) => {
   }
 
   const getFlights = async () => {
+    setFlightsLoading(true);
     try {
       let params = {};
 
       const response = await request({
         url: `${baseUrl}searchEvents`,
-        params: params,
+        params: {
+          ...params,
+          cacheBuster: new Date().getTime(), // Add a cache-busting parameter
+        },
         method: "GET",
       });
 
@@ -46,17 +55,18 @@ const SearchEventsContent = (props) => {
         setFlights(response);
       } else {
         setFlights([]);
-        notify("com.canadaairvirtual.flight-center", null, null, {
+        notify("com.cav.flight-center", null, null, {
           message: "Error parsing flights",
           type: "danger",
         });
       }
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to fetch flights",
         type: "danger",
       });
     }
+    setFlightsLoading(false);
   };
 
   const updateWidth = () => {
@@ -123,15 +133,28 @@ const SearchEventsContent = (props) => {
         </table>
       </div>
 
-      <div className="info-alert mb-3 mx-8" role="alert">
-        <FontAwesomeIcon
-          icon={faInfoCircle}
-          className="mr-2"
-          style={{ fontSize: "1rem", marginTop: "2px" }}
-        />
-        <div className="info-alert-content">
-          You will see all upcoming events, but only flights for events that are
-          currently active can be dispatched.
+      <div className="flex items-center justify-between mb-3 mx-8">
+        <div className="info-alert flex-grow" role="alert">
+          <FontAwesomeIcon
+            icon={faInfoCircle}
+            className="mr-2"
+            style={{ fontSize: "1rem", marginTop: "2px" }}
+          />
+          <div className="info-alert-content">
+            You will see all upcoming events, but only flights for events that
+            are currently active can be dispatched.
+          </div>
+        </div>
+        <div
+          onClick={() => !flightsLoading && !props.loading && getFlights()}
+          className="button button-hollow ml-3"
+          style={{ height: "100%" }}
+        >
+          <span
+            className={flightsLoading || props.loading ? "animate-spin" : ""}
+          >
+            <FontAwesomeIcon icon={faRefresh} />
+          </span>
         </div>
       </div>
 
@@ -183,7 +206,8 @@ const SearchEventsContent = (props) => {
           ))
         ) : (
           <div className="data-table-row p-3 mt-3 mr-8">
-            No flights matching the search parameters were found or the results are still loading. Please be patient.
+            No flights matching the search parameters were found or the results
+            are still loading. Please be patient.
           </div>
         )}
       </div>
@@ -196,7 +220,7 @@ const SearchEvents = ({ identity, currentFlightData }) => {
   const [airports, setAirports] = useState([]);
 
   const pluginData = identity?.airline?.plugins?.find(
-    (p) => p.id === "com.canadaairvirtual.flight-center"
+    (p) => p.id === "com.cav.flight-center"
   );
 
   const getAirports = async () => {
@@ -207,7 +231,7 @@ const SearchEvents = ({ identity, currentFlightData }) => {
       });
       setAirports(response);
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to fetch airports",
         type: "danger",
       });
@@ -225,7 +249,7 @@ const SearchEvents = ({ identity, currentFlightData }) => {
 
       setAircraft(response);
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to fetch aircraft",
         type: "danger",
       });

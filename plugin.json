@@ -1,7 +1,7 @@
 {
-  "id": "com.canadaairvirtual.flight-center",
+  "id": "com.cav.flight-center",
   "name": "CAV Flight Center",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "type": "airline",
   "allowedCommunities": [402],
   "description": "A customized flight booking system for Canada Air Virtual",

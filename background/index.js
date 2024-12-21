@@ -208,7 +208,13 @@ module.exports = {
         handler: async (req, res) => {
           const { tour, tourCategory } = req.query;
 
-          const entry = getCache("tourLegs", `${tour}-${tourCategory}-${scIdentity.va_user.session}`, req);
+          let params = { ...req.query }; // Include all query parameters
+
+          const entry = getCache(
+            "tourLegs",
+            `${tour}-${tourCategory}-${scIdentity.va_user.session}-${params.cacheBuster}`,
+            req
+          );
 
           if (entry) {
             return res.json(entry);
@@ -218,7 +224,11 @@ module.exports = {
             let params = {};
             if (tour !== undefined && tour !== null && tour !== "")
               params.tour = tour;
-            if (tourCategory !== undefined && tourCategory !== null && tourCategory !== "")
+            if (
+              tourCategory !== undefined &&
+              tourCategory !== null &&
+              tourCategory !== ""
+            )
               params.tourCategory = tourCategory;
 
             const response = await axios({
@@ -230,7 +240,11 @@ module.exports = {
               },
             });
 
-            storeCache("tourLegs", `${tour}-${tourCategory}-${scIdentity.va_user.session}`, response.data);
+            storeCache(
+              "tourLegs",
+              `${tour}-${tourCategory}-${scIdentity.va_user.session}`,
+              response.data
+            );
 
             return res.json(response.data);
           } catch (error) {
@@ -242,15 +256,20 @@ module.exports = {
       searchEvents: {
         description: "Endpoint to list events",
         handler: async (req, res) => {
-          const entry = getCache("events", "data", req);
-
-          if (entry) {
-            return res.json(entry);
-          }
-
           try {
-            let params = {};
-            
+            let params = { ...req.query }; // Include all query parameters
+
+            const entry = getCache("events", params.cacheBuster, req);
+
+            if (entry) {
+              return res.json(entry);
+            }
+
+            // Remove cacheBuster from params if it exists
+            if (params.cacheBuster) {
+              delete params.cacheBuster;
+            }
+
             const response = await axios({
               url: `${scIdentity.airline.settings.scriptURL}flights/searchEvents`,
               method: "GET",

@@ -17,7 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
 
-const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.cav.flight-center/";
 
 const Flight = (props) => {
   const [aircraft, setAircraft] = useState(null);
@@ -59,7 +59,7 @@ const Flight = (props) => {
       });
 
       if (response && response.bidID) {
-        notify("com.canadaairvirtual.flight-center", null, null, {
+        notify("com.cav.flight-center", null, null, {
           message: "Flight dispatched successfully",
           type: "success",
         });
@@ -68,7 +68,7 @@ const Flight = (props) => {
         throw new Error("Failed to dispatch flight");
       }
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to dispatch flight",
         type: "danger",
       });
@@ -91,7 +91,7 @@ const Flight = (props) => {
     const bidID = props.flight.bidID ? props.flight.bidID : await _bidFlight();
 
     if (!aircraft) {
-      return notify("com.canadaairvirtual.flight-center", null, null, {
+      return notify("com.cav.flight-center", null, null, {
         message: "No suitable aircraft for this flight",
         type: "danger",
       });
@@ -127,7 +127,7 @@ const Flight = (props) => {
 
       foundBid = !!bids.find((bid) => bid.bidID === bidID);
     } catch (error) {
-      notify("com.canadaairvirtual.flight-center", null, null, {
+      notify("com.cav.flight-center", null, null, {
         message: "Failed to get dispatched flights",
         type: "danger",
       });
@@ -146,7 +146,7 @@ const Flight = (props) => {
           pluginID: "com.tfdidesign.flight-tracking",
         });
       } else {
-        notify("com.canadaairvirtual.flight-center", null, null, {
+        notify("com.cav.flight-center", null, null, {
           message: "Failed to start flight - dispatched flight not found",
           type: "danger",
         });
@@ -163,7 +163,7 @@ const Flight = (props) => {
     e.stopPropagation();
 
     if (!aircraft) {
-      return notify("com.canadaairvirtual.flight-center", null, null, {
+      return notify("com.cav.flight-center", null, null, {
         message: "No suitable aircraft for this flight",
         type: "danger",
       });
@@ -171,7 +171,7 @@ const Flight = (props) => {
 
     try {
       const recoverableFlightData = await localApi(
-        "api/com.canadaairvirtual.flight-center/recover"
+        "api/com.cav.flight-center/recover"
       );
 
       if (
@@ -221,7 +221,7 @@ const Flight = (props) => {
 
         foundBid = !!bids.find((bid) => bid.bidID === props.flight.bidID);
       } catch (error) {
-        notify("com.canadaairvirtual.flight-center", null, null, {
+        notify("com.cav.flight-center", null, null, {
           message: "Failed to get dispatched flights",
           type: "danger",
         });
@@ -239,7 +239,7 @@ const Flight = (props) => {
           pluginID: "com.tfdidesign.flight-tracking",
         });
       } else {
-        notify("com.canadaairvirtual.flight-center", null, null, {
+        notify("com.cav.flight-center", null, null, {
           message: "Failed to start flight - dispatched flight not found",
           type: "danger",
         });
@@ -247,7 +247,7 @@ const Flight = (props) => {
         props.getBidFlights();
       }
     } catch (error) {
-      return notify("com.canadaairvirtual.flight-center", null, null, {
+      return notify("com.cav.flight-center", null, null, {
         message: "No suitable flight found",
         type: "danger",
       });
@@ -257,7 +257,7 @@ const Flight = (props) => {
   const planWithSimBrief = async () => {
     if (!aircraft) {
       return notify(
-        "com.canadaairvirtual.flight-center",
+        "com.cav.flight-center",
         null,
         "No suitable aircraft for this flight",
         {
@@ -270,8 +270,8 @@ const Flight = (props) => {
     const bidID = props.flight.bidID ? props.flight.bidID : await _bidFlight();
 
     try {
-      const airline = props.flight.code.slice(0, 3);
-      const flightNumber = props.flight.code.slice(3);
+      const airline = props.flight.number.slice(0, 3);
+      const flightNumber = props.flight.number.slice(3);
       await localApi("api/com.tfdidesign.simbrief/setflightinfo", "POST", {
         flightInfo: {
           bidId: bidID,

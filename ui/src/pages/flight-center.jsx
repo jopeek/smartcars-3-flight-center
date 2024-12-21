@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Flight from "../components/flight.jsx";
 
-const baseUrl = "http://localhost:7172/api/com.canadaairvirtual.flight-center/";
+const baseUrl = "http://localhost:7172/api/com.cav.flight-center/";
 
 const Bids = (props) => {
   const [logBookInstalled, setLogBookInstalled] = useState(false);
@@ -113,7 +113,7 @@ const Bids = (props) => {
     try {
       // Using request and not localApi because we want to ignore errors
       const recoverableFlight = await request(
-        "http://localhost:7172/api/com.canadaairvirtual.flight-center/recoverable",
+        "http://localhost:7172/api/com.cav.flight-center/recoverable",
         "GET"
       );
 
@@ -275,7 +275,7 @@ const FlightCenter = ({ identity, currentFlightData }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const pluginData = identity?.airline?.plugins?.find(
-    (p) => p.id === "com.canadaairvirtual.flight-center"
+    (p) => p.id === "com.cav.flight-center"
   );
 
   useEffect(() => {
