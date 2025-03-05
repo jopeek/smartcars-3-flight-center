@@ -129,12 +129,14 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                     settings["com.tfdidesign.simbrief"].simbriefUsername,
             },
         );
-console.log(response);
+
+        console.log(response);
+        console.log(aircrafts);
+
         setDepApt(response.origin.icao_code);
         setArrApt(response.destination.icao_code);
         setCallsign(
-            response.general.icao_airline +
-                response.general.flight_number,
+            response.general.icao_airline + response.general.flight_number,
         );
         setFlightType(
             Number(response.general.passengers) > 0 ? "P" : "C",
@@ -159,10 +161,18 @@ console.log(response);
                 3600,
         );
         setArrMin(
-            ((Number(response.times.est_in) % 3600) -
-                (Number(response.times.est_in) % 60)) /
-                60,
+            ((Number(response.times.est_in) % 3600) - (Number(response.times.est_in) % 60)) / 60,
         );
+
+        // Find the matching aircraft
+        const matchingAircraft = aircrafts.find(
+            (ac) => ac.code === response.aircraft.icaocode
+        );
+
+        // Set the aircraft state to the ID of the matching aircraft
+        if (matchingAircraft) {
+            setAircraft(matchingAircraft.id);
+        }
     }
 
     if (!airportsList || !aircrafts) return <></>;
