@@ -354,7 +354,7 @@ const Flight = (props) => {
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
-              <span class="text-nowrap flex items-center">
+              <span className="text-nowrap flex items-center">
                 {props.flight.airlineImage && (
                   <img
                     src={props.flight.airlineImage}
@@ -366,7 +366,7 @@ const Flight = (props) => {
               </span>
             </h2>
             <h3 className="block md:hidden">
-              <span class="text-nowrap flex items-center">
+              <span className="text-nowrap flex items-center">
                 {props.flight.airlineImage && (
                   <img
                     src={props.flight.airlineImage}
@@ -384,7 +384,7 @@ const Flight = (props) => {
             onClick={() => props.setExpandedFlight(null)}
           >
             <h2 className="hidden md:block">
-              <span class="text-nowrap flex items-center">
+              <span className="text-nowrap flex items-center">
                 {props.flight.airlineImage && (
                   <img
                     src={props.flight.airlineImage}
@@ -413,7 +413,7 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.airlineImage && (
                 <img
                   src={props.flight.airlineImage}
@@ -436,7 +436,7 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.departureAirportImage && (
                 <img
                   src={props.flight.departureAirportImage}
@@ -454,7 +454,7 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.departureAirportImage && (
                 <img
                   src={props.flight.departureAirportImage}
@@ -470,7 +470,7 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.airlineImage && (
                 <img
                   src={props.flight.airlineImage}
@@ -486,7 +486,7 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.arrivalAirportImage && (
                 <img
                   src={props.flight.arrivalAirportImage}
@@ -504,7 +504,7 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.arrivalAirportImage && (
                 <img
                   src={props.flight.arrivalAirportImage}
@@ -520,7 +520,7 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.departureAirportImage && (
                 <img
                   src={props.flight.departureAirportImage}
@@ -559,7 +559,7 @@ const Flight = (props) => {
             className="text-left interactive"
             onClick={() => props.setExpandedFlight(null)}
           >
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.arrivalAirportImage && (
                 <img
                   src={props.flight.arrivalAirportImage}
@@ -847,7 +847,7 @@ const Flight = (props) => {
           </div>
         ) : props.source === "schedule" ? (
           <div className="text-left col-span-2">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.airlineImage && (
                 <img
                   src={props.flight.airlineImage}
@@ -860,7 +860,7 @@ const Flight = (props) => {
           </div>
         ) : (
           <div className="text-left col-span-2">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.airlineImage && (
                 <img
                   src={props.flight.airlineImage}
@@ -875,7 +875,7 @@ const Flight = (props) => {
 
         {props.source === "tour" ? (
           <div className="text-left">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.airlineImage && (
                 <img
                   src={props.flight.airlineImage}
@@ -890,7 +890,7 @@ const Flight = (props) => {
           <div className="text-left">{props.flight.eventTime + " UTC"}</div>
         ) : (
           <div className="text-left">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.departureAirportImage && (
                 <img
                   src={props.flight.departureAirportImage}
@@ -905,7 +905,7 @@ const Flight = (props) => {
 
         {props.source === "tour" ? (
           <div className="text-left">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.departureAirportImage && (
                 <img
                   src={props.flight.departureAirportImage}
@@ -918,7 +918,7 @@ const Flight = (props) => {
           </div>
         ) : props.source === "event" ? (
           <div className="text-left">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.airlineImage && (
                 <img
                   src={props.flight.airlineImage}
@@ -931,7 +931,7 @@ const Flight = (props) => {
           </div>
         ) : (
           <div className="text-left">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.arrivalAirportImage && (
                 <img
                   src={props.flight.arrivalAirportImage}
@@ -946,7 +946,7 @@ const Flight = (props) => {
 
         {props.source === "tour" ? (
           <div className="text-left">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.arrivalAirportImage && (
                 <img
                   src={props.flight.arrivalAirportImage}
@@ -959,7 +959,7 @@ const Flight = (props) => {
           </div>
         ) : props.source === "event" ? (
           <div className="text-left">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.departureAirportImage && (
                 <img
                   src={props.flight.departureAirportImage}
@@ -980,7 +980,7 @@ const Flight = (props) => {
           <div className="text-left">{props.flight.distance}nm</div>
         ) : props.source === "event" ? (
           <div className="text-left">
-            <span class="text-nowrap flex items-center">
+            <span className="text-nowrap flex items-center">
               {props.flight.arrivalAirportImage && (
                 <img
                   src={props.flight.arrivalAirportImage}
