@@ -130,9 +130,6 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
             },
         );
 
-        console.log(response);
-        console.log(aircrafts);
-
         setDepApt(response.origin.icao_code);
         setArrApt(response.destination.icao_code);
         setCallsign(
