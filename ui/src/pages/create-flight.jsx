@@ -129,38 +129,38 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
                     settings["com.tfdidesign.simbrief"].simbriefUsername,
             },
         );
-
-        setDepApt(response.flightPlan.origin.icao_code);
-        setArrApt(response.flightPlan.destination.icao_code);
+console.log(response);
+        setDepApt(response.origin.icao_code);
+        setArrApt(response.destination.icao_code);
         setCallsign(
-            response.flightPlan.general.icao_airline +
-                response.flightPlan.general.flight_number,
+            response.general.icao_airline +
+                response.general.flight_number,
         );
         setFlightType(
-            Number(response.flightPlan.general.passengers) > 0 ? "P" : "C",
+            Number(response.general.passengers) > 0 ? "P" : "C",
         );
-        setCruiseAlt(response.flightPlan.general.initial_altitude);
+        setCruiseAlt(response.general.initial_altitude);
         setRoute(
-            `${response.flightPlan.origin.icao_code} ${response.flightPlan.general.route} ${response.flightPlan.destination.icao_code}`,
+            `${response.origin.icao_code} ${response.general.route} ${response.destination.icao_code}`,
         );
         setDepHour(
-            ((Number(response.flightPlan.times.est_out) % 86400) -
-                (Number(response.flightPlan.times.est_out) % 3600)) /
+            ((Number(response.times.est_out) % 86400) -
+                (Number(response.times.est_out) % 3600)) /
                 3600,
         );
         setDepMin(
-            ((Number(response.flightPlan.times.est_out) % 3600) -
-                (Number(response.flightPlan.times.est_out) % 60)) /
+            ((Number(response.times.est_out) % 3600) -
+                (Number(response.times.est_out) % 60)) /
                 60,
         );
         setArrHour(
-            ((Number(response.flightPlan.times.est_in) % 86400) -
-                (Number(response.flightPlan.times.est_in) % 3600)) /
+            ((Number(response.times.est_in) % 86400) -
+                (Number(response.times.est_in) % 3600)) /
                 3600,
         );
         setArrMin(
-            ((Number(response.flightPlan.times.est_in) % 3600) -
-                (Number(response.flightPlan.times.est_in) % 60)) /
+            ((Number(response.times.est_in) % 3600) -
+                (Number(response.times.est_in) % 60)) /
                 60,
         );
     }
