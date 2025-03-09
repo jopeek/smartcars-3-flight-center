@@ -130,10 +130,14 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
             },
         );
 
+        console.log(response);
+
         setDepApt(response.origin.icao_code);
         setArrApt(response.destination.icao_code);
         setCallsign(
-            response.general.icao_airline + response.general.flight_number,
+            (response.general.icao_airline && response.general.icao_airline != '[object Object]') 
+                ? response.general.icao_airline + response.general.flight_number 
+                : response.general.flight_number
         );
         setFlightType(
             Number(response.general.passengers) > 0 ? "P" : "C",
