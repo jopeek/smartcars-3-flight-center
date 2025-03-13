@@ -10,7 +10,7 @@ import {
   faTrash,
   faCloudArrowDown,
   faRoute,
-  faPlaneDeparture,
+  faSatelliteDish,
   faCompass,
   faCheckCircle,
   faSuitcase,
@@ -312,49 +312,90 @@ const Flight = (props) => {
   if (props.expanded) {
     return (
       <div className="grid grid-cols-10 data-table-row p-3 mt-3 box-shadow select items-center">
-        {props.source === "tour" ? (
-          <div
-            className="text-left col-span-2 interactive"
-            onClick={() => props.setExpandedFlight(null)}
-          >
-            <h2 className="hidden md:block">
-              {props.flight.name + " - Leg " + props.flight.legNumber}
-              {props.flight.completed && (
-                <FontAwesomeIcon
-                  icon={faCheckCircle}
-                  className="text-green-500 ml-1"
-                />
-              )}
-            </h2>
-            <h3 className="block md:hidden">
-              {props.flight.name + " - Leg " + props.flight.legNumber}
-              {props.flight.completed && (
-                <FontAwesomeIcon
-                  icon={faCheckCircle}
-                  className="text-green-500 ml-1"
-                />
-              )}
-            </h3>
-          </div>
-        ) : props.source === "event" ? (
-          <div
-            className="text-left col-span-2 interactive"
-            onClick={() => props.setExpandedFlight(null)}
-          >
-            <h2 className="hidden md:block">
-              {props.flight.eventType + " - " + props.flight.name}
-            </h2>
-            <h3 className="block md:hidden">
-              {props.flight.eventType + " - " + props.flight.name}
-            </h3>
-          </div>
-        ) : props.source === "schedule" ? (
-          <div
-            className="text-left col-span-2 interactive"
-            onClick={() => props.setExpandedFlight(null)}
-          >
-            <h2 className="hidden md:block">
-              <span className="text-nowrap flex items-center">
+        <div
+          className="text-left col-span-2 interactive"
+          onClick={() => props.setExpandedFlight(null)}
+        >
+          {props.source === "tour" ? (
+            <>
+              <h2 className="hidden md:block">
+                {props.flight.name + " - Leg " + props.flight.legNumber}
+                {props.flight.completed && (
+                  <FontAwesomeIcon
+                    icon={faCheckCircle}
+                    className="text-green-500 ml-1"
+                  />
+                )}
+              </h2>
+              <h3 className="block md:hidden">
+                {props.flight.name + " - Leg " + props.flight.legNumber}
+                {props.flight.completed && (
+                  <FontAwesomeIcon
+                    icon={faCheckCircle}
+                    className="text-green-500 ml-1"
+                  />
+                )}
+              </h3>
+            </>
+          ) : props.source === "event" ? (
+            <>
+              <h2 className="hidden md:block">
+                {props.flight.eventType + " - " + props.flight.name}
+              </h2>
+              <h3 className="block md:hidden">
+                {props.flight.eventType + " - " + props.flight.name}
+              </h3>
+            </>
+          ) : props.source === "schedule" ? (
+            <>
+              <h2 className="hidden md:block">
+                <span className="text-nowrap flex items-center">
+                  {props.flight.airlineImage && (
+                    <img
+                      src={props.flight.airlineImage}
+                      alt="Airline Logo"
+                      className="img-circle airlineImage"
+                    />
+                  )}
+                  {props.flight.number}
+                </span>
+              </h2>
+              <h3 className="block md:hidden">
+                <span className="text-nowrap flex items-center">
+                  {props.flight.airlineImage && (
+                    <img
+                      src={props.flight.airlineImage}
+                      alt="Airline Logo"
+                      className="img-circle airlineImage"
+                    />
+                  )}
+                  {props.flight.number}
+                </span>
+              </h3>
+            </>
+          ) : (
+            <>
+              <h2 className="hidden md:block">
+                <span className="text-nowrap flex items-center">
+                  {props.flight.airlineImage && (
+                    <img
+                      src={props.flight.airlineImage}
+                      alt="Airline Logo"
+                      className="img-circle airlineImage"
+                    />
+                  )}
+                  {props.flight.number}
+                  {props.flight.flightInProgress === 1 && (
+                    <FontAwesomeIcon
+                      icon={faSatelliteDish}
+                      className="text-green-500 ml-2"
+                      style={{ fontSize: "1rem" }}
+                      title="Flight in progress"
+                    />
+                  )}
+                </span>
+              </h2>
+              <h3 className="block md:hidden">
                 {props.flight.airlineImage && (
                   <img
                     src={props.flight.airlineImage}
@@ -363,50 +404,10 @@ const Flight = (props) => {
                   />
                 )}
                 {props.flight.number}
-              </span>
-            </h2>
-            <h3 className="block md:hidden">
-              <span className="text-nowrap flex items-center">
-                {props.flight.airlineImage && (
-                  <img
-                    src={props.flight.airlineImage}
-                    alt="Airline Logo"
-                    className="img-circle airlineImage"
-                  />
-                )}
-                {props.flight.number}
-              </span>
-            </h3>
-          </div>
-        ) : (
-          <div
-            className="col-span-2 interactive"
-            onClick={() => props.setExpandedFlight(null)}
-          >
-            <h2 className="hidden md:block">
-              <span className="text-nowrap flex items-center">
-                {props.flight.airlineImage && (
-                  <img
-                    src={props.flight.airlineImage}
-                    alt="Airline Logo"
-                    className="img-circle airlineImage"
-                  />
-                )}
-                {props.flight.number}
-              </span>
-            </h2>
-            <h3 className="block md:hidden">
-              {props.flight.airlineImage && (
-                <img
-                  src={props.flight.airlineImage}
-                  alt="Airline Logo"
-                  className="img-circle airlineImage"
-                />
-              )}
-              {props.flight.number}
-            </h3>
-          </div>
-        )}
+              </h3>
+            </>
+          )}
+        </div>
 
         {props.source === "tour" ? (
           <div
@@ -608,7 +609,8 @@ const Flight = (props) => {
         </div>
         <div className="flex items-center justify-end px-3 col-span-2">
           {props.flight.bidID &&
-            props.currentFlightData?.bidID !== props.flight.bidID && (
+            props.currentFlightData?.bidID !== props.flight.bidID &&
+            props.flight.flightInProgress !== 1 && (
               <button
                 className="button button-hollow float-right ml-3 mb-1 mt-1"
                 onClick={(e) => {
@@ -667,23 +669,24 @@ const Flight = (props) => {
               </div>
             )}
 
-          {props.currentFlightData &&
-            props.currentFlightData.bidID === props.flight.bidID && (
-              <button
-                onClick={() =>
-                  localApi("api/navigate", "POST", {
-                    pluginID: "com.tfdidesign.flight-tracking",
-                  })
-                }
-                className="button button-solid float-right ml-3 mb-1 mt-1"
-                data-tooltip-id={`bid-${
-                  props.flight.bidID ? props.flight.bidID : props.flight.id
-                }`}
-                data-tooltip-content="Go to flight-tracking"
-              >
-                <FontAwesomeIcon icon={faCompass} />
-              </button>
-            )}
+          {((props.currentFlightData &&
+            props.currentFlightData.bidID === props.flight.bidID) ||
+            props.flight.flightInProgress === 1) && (
+            <button
+              onClick={() =>
+                localApi("api/navigate", "POST", {
+                  pluginID: "com.tfdidesign.flight-tracking",
+                })
+              }
+              className="button button-solid float-right ml-3 mb-1 mt-1"
+              data-tooltip-id={`bid-${
+                props.flight.bidID ? props.flight.bidID : props.flight.id
+              }`}
+              data-tooltip-content="Go to flight-tracking"
+            >
+              <FontAwesomeIcon icon={faCompass} />
+            </button>
+          )}
 
           {props.simBriefInstalled && !!!props.currentFlightData && (
             <button
@@ -698,21 +701,6 @@ const Flight = (props) => {
               disabled={!aircraft || !props.canbid}
             >
               <FontAwesomeIcon icon={faRoute} />
-            </button>
-          )}
-          {!props.currentFlightData && (
-            <button
-              onClick={flyFlight}
-              className={`button button-solid float-right ml-3 mb-1 mt-1 ${
-                !props.canbid ? "button-disabled" : ""
-              }`}
-              data-tooltip-id={`bid-${
-                props.flight.bidID ? props.flight.bidID : props.flight.id
-              }`}
-              data-tooltip-content="Fly this flight"
-              disabled={!props.canbid}
-            >
-              <FontAwesomeIcon icon={faPlaneDeparture} />
             </button>
           )}
           {!props.flight.bidID &&
@@ -831,47 +819,55 @@ const Flight = (props) => {
           );
         }}
       >
-        {props.source === "tour" ? (
-          <div className="text-left col-span-2">
-            {props.flight.name + " - Leg " + props.flight.legNumber}
-            {props.flight.completed && (
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                className="text-green-500 ml-1"
-              />
-            )}
-          </div>
-        ) : props.source === "event" ? (
-          <div className="text-left col-span-2">
-            {props.flight.eventType + " - " + props.flight.name}
-          </div>
-        ) : props.source === "schedule" ? (
-          <div className="text-left col-span-2">
-            <span className="text-nowrap flex items-center">
-              {props.flight.airlineImage && (
-                <img
-                  src={props.flight.airlineImage}
-                  alt="Airline Logo"
-                  className="img-circle airlineImage"
+        <div className="text-left col-span-2">
+          {props.source === "tour" ? (
+            <>
+              {props.flight.name + " - Leg " + props.flight.legNumber}
+              {props.flight.completed && (
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  className="text-green-500 ml-1"
                 />
               )}
-              {props.flight.number}
-            </span>
-          </div>
-        ) : (
-          <div className="text-left col-span-2">
-            <span className="text-nowrap flex items-center">
-              {props.flight.airlineImage && (
-                <img
-                  src={props.flight.airlineImage}
-                  alt="Airline Logo"
-                  className="img-circle airlineImage"
-                />
-              )}
-              {props.flight.number}
-            </span>
-          </div>
-        )}
+            </>
+          ) : props.source === "event" ? (
+            <>{props.flight.eventType + " - " + props.flight.name}</>
+          ) : props.source === "schedule" ? (
+            <>
+              <span className="text-nowrap flex items-center">
+                {props.flight.airlineImage && (
+                  <img
+                    src={props.flight.airlineImage}
+                    alt="Airline Logo"
+                    className="img-circle airlineImage"
+                  />
+                )}
+                {props.flight.number}
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="text-nowrap flex items-center">
+                {props.flight.airlineImage && (
+                  <img
+                    src={props.flight.airlineImage}
+                    alt="Airline Logo"
+                    className="img-circle airlineImage"
+                  />
+                )}
+                {props.flight.number}
+                {props.flight.flightInProgress === 1 && (
+                  <FontAwesomeIcon
+                    icon={faSatelliteDish}
+                    className="text-green-500 ml-2"
+                    style={{ fontSize: "1rem" }}
+                    title="Flight in progress"
+                  />
+                )}
+              </span>
+            </>
+          )}
+        </div>
 
         {props.source === "tour" ? (
           <div className="text-left">
@@ -1022,7 +1018,8 @@ const Flight = (props) => {
 
         <div className="flex items-center justify-end px-3 col-span-2">
           {props.flight.bidID &&
-            props.currentFlightData?.bidID !== props.flight.bidID && (
+            props.currentFlightData?.bidID !== props.flight.bidID &&
+            props.flight.flightInProgress !== 1 && (
               <button
                 className="button button-hollow float-right ml-3 mb-1 mt-1"
                 onClick={(e) => {
@@ -1081,23 +1078,24 @@ const Flight = (props) => {
               </div>
             )}
 
-          {props.currentFlightData &&
-            props.currentFlightData.bidID === props.flight.bidID && (
-              <button
-                onClick={() =>
-                  localApi("api/navigate", "POST", {
-                    pluginID: "com.tfdidesign.flight-tracking",
-                  })
-                }
-                className="button button-solid float-right ml-3 mb-1 mt-1"
-                data-tooltip-id={`bid-${
-                  props.flight.bidID ? props.flight.bidID : props.flight.id
-                }`}
-                data-tooltip-content="Go to flight-tracking"
-              >
-                <FontAwesomeIcon icon={faCompass} />
-              </button>
-            )}
+          {((props.currentFlightData &&
+            props.currentFlightData.bidID === props.flight.bidID) ||
+            props.flight.flightInProgress === 1) && (
+            <button
+              onClick={() =>
+                localApi("api/navigate", "POST", {
+                  pluginID: "com.tfdidesign.flight-tracking",
+                })
+              }
+              className="button button-solid float-right ml-3 mb-1 mt-1"
+              data-tooltip-id={`bid-${
+                props.flight.bidID ? props.flight.bidID : props.flight.id
+              }`}
+              data-tooltip-content="Go to flight-tracking"
+            >
+              <FontAwesomeIcon icon={faCompass} />
+            </button>
+          )}
 
           {props.simBriefInstalled && !!!props.currentFlightData && (
             <button
@@ -1112,21 +1110,6 @@ const Flight = (props) => {
               disabled={!aircraft || !props.canbid}
             >
               <FontAwesomeIcon icon={faRoute} />
-            </button>
-          )}
-          {!props.currentFlightData && (
-            <button
-              onClick={flyFlight}
-              className={`button button-solid float-right ml-3 mb-1 mt-1 ${
-                !props.canbid ? "button-disabled" : ""
-              }`}
-              data-tooltip-id={`bid-${
-                props.flight.bidID ? props.flight.bidID : props.flight.id
-              }`}
-              data-tooltip-content="Fly this flight"
-              disabled={!props.canbid}
-            >
-              <FontAwesomeIcon icon={faPlaneDeparture} />
             </button>
           )}
           {!props.flight.bidID &&
