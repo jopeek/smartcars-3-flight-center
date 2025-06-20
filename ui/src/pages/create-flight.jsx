@@ -121,16 +121,21 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
             return;
         }
 
-        const response = await localApi(
-            "api/com.tfdidesign.simbrief/fetchplan",
-            "POST",
-            {
-                simbriefUsername:
-                    settings["com.tfdidesign.simbrief"].simbriefUsername,
-            },
-        );
+        const simbriefUsername = settings["com.tfdidesign.simbrief"].simbriefUsername;
+        
+        const simbriefUrl = `https://www.simbrief.com/api/xml.fetcher.php?username=${simbriefUsername}&json=1`;
 
-        console.log(response);
+        let response;
+        try {
+            const res = await fetch(simbriefUrl);
+            response = await res.json();
+        } catch (err) {
+            notify("com.cav.flight-center", null, null, {
+                message: "Failed to fetch SimBrief plan",
+                type: "danger",
+            });
+            return;
+        }
 
         setDepApt(response.origin.icao_code);
         setArrApt(response.destination.icao_code);
