@@ -125,7 +125,7 @@ const CreateFlightContents = ({ airportsList, aircrafts, identity }) => {
             "api/com.tfdidesign.simbrief/fetchplan",
             "POST",
             {
-                simBriefUsername:
+                simbriefUsername:
                     settings["com.tfdidesign.simbrief"].simbriefUsername,
             },
         );
